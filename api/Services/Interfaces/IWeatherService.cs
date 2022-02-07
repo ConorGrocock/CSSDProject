@@ -2,5 +2,7 @@ namespace api.Services.Interfaces;
 
 public interface IWeatherService
 {
-    public WeatherForecast[] GetWeatherForcast();
+    public Task<WeatherForecast[]> GetWeatherForecast();
+
+    public Task Insert(WeatherForecast weatherForecast);
 }

@@ -17,9 +17,15 @@ public class WeatherForecastController : ControllerBase
         _weatherService = weatherService;
     }
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpGet]
+    public async Task<IEnumerable<WeatherForecast>> Get()
     {
-        return _weatherService.GetWeatherForcast();
+        return await _weatherService.GetWeatherForecast();
+    }
+
+    [HttpPost]
+    public async Task Post(WeatherForecast weatherForecast)
+    {
+        await _weatherService.Insert(weatherForecast);
     }
 }

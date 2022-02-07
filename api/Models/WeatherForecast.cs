@@ -1,6 +1,8 @@
+using api.Models;
+
 namespace api;
 
-public class WeatherForecast
+public class WeatherForecast : BaseModel
 {
     public DateTime Date { get; set; }
 

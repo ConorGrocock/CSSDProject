@@ -1,21 +1,26 @@
+using api.Repositories.Common.Interfaces;
 using api.Services.Interfaces;
 
 namespace api.Services;
 
-class WeatherService : IWeatherService
+public class WeatherService : IWeatherService
 {
-    private static readonly string[] Summaries = new[]
+    private readonly IWeatherForecastRepository _weatherForecastRepository;
+
+    public WeatherService(IWeatherForecastRepository weatherForecastRepository)
     {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-    public WeatherForecast[] GetWeatherForcast()
+        _weatherForecastRepository = weatherForecastRepository;
+    }
+
+    public async Task<WeatherForecast[]> GetWeatherForecast()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+        return (await _weatherForecastRepository.GetAll()).ToArray();
+    }
+
+    public Task Insert(WeatherForecast weatherForecast)
+    {
+        _weatherForecastRepository.Insert(weatherForecast);
+
+        return Task.CompletedTask;
     }
 }
