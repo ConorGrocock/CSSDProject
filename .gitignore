@@ -3,7 +3,18 @@
 ################################################################################
 
 /.vs
+<<<<<<< HEAD
+/CSSDProject/.vs/CSSDProject/v17
+/CSSDProject/CSSDProject/obj
+/CSSDProject/CSSDProject/bin/Debug/net6.0
+/CSSDProject/.vs/CSSDProject/config
+api/obj
+api/UnitTest/bin/Debug/net6.0
+api/UnitTest/obj
+
+=======
 */obj/
 */bin/
 */.vs
 */.idea
+>>>>>>> main
