@@ -7,7 +7,7 @@
 /CSSDProject/CSSDProject/obj
 /CSSDProject/CSSDProject/bin/Debug/net6.0
 /CSSDProject/.vs/CSSDProject/config
-api/obj/api.csproj.nuget.dgspec.json
-api/obj/api.csproj.nuget.g.targets
-api/obj/project.nuget.cache
-api/obj/api.csproj.nuget.g.targets
+api/obj
+api/UnitTest/bin/Debug/net6.0
+api/UnitTest/obj
+

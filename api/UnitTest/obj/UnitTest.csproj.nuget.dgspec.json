@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\UnitTest.csproj": {}
+    "c:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\UnitTest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\UnitTest.csproj": {
+    "c:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\UnitTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\UnitTest.csproj",
+        "projectUniqueName": "c:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\UnitTest.csproj",
         "projectName": "UnitTest",
-        "projectPath": "C:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\UnitTest.csproj",
+        "projectPath": "c:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\UnitTest.csproj",
         "packagesPath": "C:\\Users\\fachi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\obj\\",
+        "outputPath": "c:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\UnitTest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\fachi\\AppData\\Roaming\\NuGet\\NuGet.Config",
