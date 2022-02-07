@@ -208,24 +208,26 @@
     ]
   },
   "packageFolders": {
-    "/Users/conorgrocock/.nuget/packages/": {}
+    "C:\\Users\\fachi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/api/api.csproj",
+      "projectUniqueName": "C:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/api/api.csproj",
-      "packagesPath": "/Users/conorgrocock/.nuget/packages/",
-      "outputPath": "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/api/obj/",
+      "projectPath": "C:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\api.csproj",
+      "packagesPath": "C:\\Users\\fachi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\fachi\\OneDrive - Sheffield Hallam University\\3rd Year\\Case studies\\CSSDProject\\api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/conorgrocock/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\fachi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -267,7 +269,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.100/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }
