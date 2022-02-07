@@ -1,7 +1,5 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+# React frontend
+This is the react frontend for our toll system
 ## Available Scripts
 
 In the project directory, you can run:
