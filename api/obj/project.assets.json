@@ -1219,30 +1219,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\joshsj\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "/Users/conorgrocock/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\CSSDProject\\api\\api.csproj",
+      "projectUniqueName": "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/api/api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Projects\\CSSDProject\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\joshsj\\.nuget\\packages\\",
-      "outputPath": "C:\\Projects\\CSSDProject\\api\\obj\\",
+      "projectPath": "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/api/api.csproj",
+      "packagesPath": "/Users/conorgrocock/.nuget/packages/",
+      "outputPath": "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/api/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\joshsj\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/conorgrocock/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1288,7 +1282,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }
