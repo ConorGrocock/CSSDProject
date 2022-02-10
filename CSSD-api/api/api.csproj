@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>9</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="UnitTest\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="UnitTest\obj\UnitTest.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="api.tests\obj\api.tests.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="api.tests\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="api.tests\obj\project.packagespec.json" />
+  </ItemGroup>
+
+</Project>

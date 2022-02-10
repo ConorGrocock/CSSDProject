@@ -1,0 +1,63 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/CSSD-api/api/api.csproj": {}
+  },
+  "projects": {
+    "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/CSSD-api/api/api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/CSSD-api/api/api.csproj",
+        "projectName": "api",
+        "projectPath": "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/CSSD-api/api/api.csproj",
+        "packagesPath": "/Users/conorgrocock/.nuget/packages/",
+        "outputPath": "/Users/conorgrocock/Documents/University/Case-Studies/CSSDProject/CSSD-api/api/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/conorgrocock/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net60": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net60": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Library/Frameworks/Mono.framework/Versions/6.12.0/lib/mono/msbuild/Current/bin/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
