@@ -1,6 +1,4 @@
-using api.Models;
-
-namespace api;
+namespace api.Models;
 
 public class WeatherForecast : BaseModel
 {

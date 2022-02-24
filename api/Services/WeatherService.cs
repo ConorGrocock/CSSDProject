@@ -1,3 +1,4 @@
+using api.Models;
 using api.Repositories.Common.Interfaces;
 using api.Services.Interfaces;
 

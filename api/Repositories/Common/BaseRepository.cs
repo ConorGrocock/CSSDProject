@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories
 {
-    public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
         protected readonly NorTollDbContext _norTollDbContext;
         protected DbSet<T> Set { get; }
-        
+
         public BaseRepository(NorTollDbContext norTollDbContext)
         {
             _norTollDbContext = norTollDbContext;
