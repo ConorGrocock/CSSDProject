@@ -12,5 +12,26 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Remove="UnitTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="UnitTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="UnitTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="UnitTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="UnitTest\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="UnitTest\obj\UnitTest.csproj.nuget.dgspec.json" />
+  </ItemGroup>
 
 </Project>
