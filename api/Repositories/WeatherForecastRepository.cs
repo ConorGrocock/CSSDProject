@@ -1,4 +1,5 @@
-﻿using api.Repositories.Common;
+﻿using api.Models;
+using api.Repositories.Common;
 using api.Repositories.Common.Interfaces;
 
 namespace api.Repositories
