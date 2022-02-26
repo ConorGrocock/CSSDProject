@@ -7,12 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-builder.Services.AddDbContextPool<NorTollDbContext>(opt => opt.UseInMemoryDatabase("api"));
+builder.Services.AddDbContextPool<NorTollDbContext>(opt =>
+    opt.UseInMemoryDatabase("api")
+);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -22,19 +21,23 @@ builder.Services
     .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>()
     .AddTransient<IWeatherService, WeatherService>();
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Logging.AddConsole();
+
+    builder.Services.AddTransient<IEmailService, TestEmailService>();
+}
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

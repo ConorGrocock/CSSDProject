@@ -1,3 +1,6 @@
 {
-    "dotnet-test-explorer.testProjectPath": "api/UnitTest"
+  "dotnet-test-explorer.testProjectPath": "api/UnitTest",
+  "[csharp]": {
+    "editor.tabSize": 4
+  }
 }

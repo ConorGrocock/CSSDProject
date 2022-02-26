@@ -8,14 +8,13 @@ namespace api.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-
-    private readonly ILogger<WeatherForecastController> _logger;
     private readonly IWeatherService _weatherService;
+    private readonly IEmailService _emailService;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherService weatherService)
+    public WeatherForecastController(IWeatherService weatherService, IEmailService emailService)
     {
-        _logger = logger;
         _weatherService = weatherService;
+        _emailService = emailService;
     }
 
     [HttpGet]
