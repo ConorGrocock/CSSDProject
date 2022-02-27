@@ -1,7 +1,7 @@
 using api.Models.Common;
 using FluentValidation;
 
-namespace api.Models.Validators;
+namespace api.Services.Common.Validators.Entities;
 
 public class BaseEntityValidator : AbstractValidator<BaseEntity>
 {

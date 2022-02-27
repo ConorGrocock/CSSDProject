@@ -33,6 +33,19 @@
         "kind": "test",
         "isDefault": true
       }
+    },
+
+    {
+      "label": "generate dtos",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "msbuild",
+        "${workspaceFolder}/api/api.csproj",
+        "-t:GenerateDtos"
+      ],
+      "problemMatcher": "$msCompile",
+      "group": "none"
     }
   ]
 }

@@ -6,8 +6,6 @@ namespace api.Repositories
 {
     public class WeatherForecastRepository : BaseRepository<WeatherForecast>, IWeatherForecastRepository
     {
-        public WeatherForecastRepository(NorTollDbContext norTollDbContext) : base(norTollDbContext)
-        {
-        }
+        public WeatherForecastRepository(NorTollDbContext norTollDbContext) : base(norTollDbContext) { }
     }
 }

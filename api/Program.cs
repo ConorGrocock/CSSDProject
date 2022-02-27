@@ -1,43 +1,65 @@
 using api.Repositories.Common;
 using api.Repositories;
 using api.Services;
-using api.Services.Interfaces;
 using api.Repositories.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using api.Services.Common.Interfaces;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
-builder.Services.AddDbContextPool<NorTollDbContext>(opt =>
-    opt.UseInMemoryDatabase("api")
-);
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-// Setup dependencies
-builder.Services
-    .AddTransient<NorTollDbContext>()
-    .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>()
-    .AddTransient<IWeatherService, WeatherService>();
-
-if (builder.Environment.IsDevelopment())
+public class Program
 {
-    builder.Logging.AddConsole();
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        var isDevelopment = builder.Environment.IsDevelopment();
 
-    builder.Services.AddTransient<IEmailService, TestEmailService>();
+        builder.Services.AddControllers();
+        builder.Services.AddDbContextPool<NorTollDbContext>(opt =>
+            opt.UseInMemoryDatabase("api")
+        );
+
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        ConfigureRepositoryDependencies(builder);
+        ConfigureServiceDependencies(builder);
+
+        if (isDevelopment)
+        {
+            ConfigureTestDependencies(builder);
+        }
+
+        var app = builder.Build();
+
+        app.UseHttpsRedirection();
+        app.UseAuthorization();
+        app.MapControllers();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app
+            .UseSwagger()
+            .UseSwaggerUI();
+        }
+
+        app.Run();
+    }
+    private static void ConfigureRepositoryDependencies(WebApplicationBuilder builder)
+    {
+        builder.Services
+            .AddTransient<NorTollDbContext>()
+            .AddTransient<IAccountRepository, AccountRepository>()
+            .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>();
+    }
+    private static void ConfigureServiceDependencies(WebApplicationBuilder builder)
+    {
+        builder.Services
+            .AddTransient<IIdentityService, IdentityService>()
+            .AddTransient<IWeatherService, WeatherService>();
+    }
+    private static void ConfigureTestDependencies(WebApplicationBuilder builder)
+    {
+        builder.Logging.AddConsole();
+
+        builder.Services.AddTransient<IEmailService, TestEmailService>();
+    }
 }
-
-var app = builder.Build();
-
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.Run();

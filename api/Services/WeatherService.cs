@@ -1,6 +1,6 @@
 using api.Models.Entities;
 using api.Repositories.Common.Interfaces;
-using api.Services.Interfaces;
+using api.Services.Common.Interfaces;
 
 namespace api.Services;
 public class WeatherService : IWeatherService

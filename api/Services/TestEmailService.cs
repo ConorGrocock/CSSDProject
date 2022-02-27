@@ -1,5 +1,5 @@
 using api.Models;
-using api.Services.Interfaces;
+using api.Services.Common.Interfaces;
 
 public class TestEmailService : IEmailService
 {
