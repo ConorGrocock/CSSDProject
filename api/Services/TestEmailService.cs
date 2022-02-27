@@ -1,3 +1,6 @@
+using api.Models;
+using api.Services.Interfaces;
+
 public class TestEmailService : IEmailService
 {
     private readonly ILogger<TestEmailService> _logger;

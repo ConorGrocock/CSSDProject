@@ -1,4 +1,4 @@
-﻿using api.Models;
+﻿using api.Models.Common;
 using api.Repositories.Common;
 using api.Repositories.Common.Exceptions;
 using api.Repositories.Interfaces;
@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
+    public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         protected readonly NorTollDbContext _norTollDbContext;
         protected DbSet<T> Set { get; }

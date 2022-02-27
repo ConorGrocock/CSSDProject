@@ -1,4 +1,4 @@
-﻿using api.Models;
+﻿using api.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories.Common

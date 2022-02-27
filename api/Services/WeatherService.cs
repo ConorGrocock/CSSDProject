@@ -1,9 +1,8 @@
-using api.Models;
+using api.Models.Entities;
 using api.Repositories.Common.Interfaces;
 using api.Services.Interfaces;
 
 namespace api.Services;
-
 public class WeatherService : IWeatherService
 {
     private readonly IWeatherForecastRepository _weatherForecastRepository;

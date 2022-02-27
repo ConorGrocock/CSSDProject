@@ -1,4 +1,4 @@
-﻿using api.Models;
+﻿using api.Models.Entities;
 using api.Repositories.Common;
 using api.Repositories.Common.Interfaces;
 
