@@ -1,9 +1,7 @@
 using api.Models.Dtos;
-using api.Models.Entities;
 using api.Repositories.Common.Interfaces;
 using api.Services.Common.Interfaces;
 using api.Services.Common.Validators.Entities;
-using Mapster;
 
 namespace api.Services;
 public class IdentityService : IIdentityService
@@ -16,7 +14,7 @@ public class IdentityService : IIdentityService
     }
     public async Task CreateAccount(CreateAccountDto dto)
     {
-        var account = dto.Adapt<Account>();
+        var account = dto.AdaptToAccount();
 
         await new AccountValidator(_accountRepository).ValidateAsync(account);
 
