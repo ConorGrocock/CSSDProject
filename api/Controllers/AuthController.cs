@@ -11,8 +11,6 @@ namespace api.Controllers;
 public class AuthController : NorTollControllerBase
 {
     private readonly IIdentityService _identityService;
-    private readonly IEmailService _emailService;
-    private readonly AuthenticationOptions _authenticationOptions;
 
     public AuthController(IIdentityService identityService)
     {
