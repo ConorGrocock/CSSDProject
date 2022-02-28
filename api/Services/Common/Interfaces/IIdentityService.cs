@@ -7,5 +7,5 @@ public interface IIdentityService
 {
     public Task CreateAccount(CreateAccountDto createAccountDto);
     public Task RequestSignIn(string email);
-    public Task SignIn(string value);
+    public Task<string> SignIn(string value);
 }

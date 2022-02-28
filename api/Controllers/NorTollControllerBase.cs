@@ -3,5 +3,5 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers;
 
 [ApiController]
-[Route("[controller]")] // TODO consider api/ root
+[Route("api/[controller]")]
 public class NorTollControllerBase : ControllerBase { }

@@ -6,6 +6,12 @@ using api.Models.Options;
 using api.Repositories.Common.Interfaces;
 using api.Services.Common.Interfaces;
 using api.Services.Common.Validators.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using FluentValidation;
 
 namespace api.Services;
 public class IdentityService : IIdentityService
@@ -42,9 +48,8 @@ public class IdentityService : IIdentityService
         };
 
         await _signInRepository.Insert(signInToken);
-        await _signInRepository.Save();
 
-        var signInUrl = $"{_authenticationOptions.SignInUrl}?token={signInToken.Value}";
+        var signInUrl = string.Format(_authenticationOptions.SignInUrlFormat, signInToken.Value);
 
         _emailService.Send(new EmailItem
         {
@@ -53,25 +58,45 @@ public class IdentityService : IIdentityService
         });
     }
 
-    public async Task SignIn(string value)
+    public async Task<string> SignIn(string value)
     {
-        var signInToken = await _signInRepository.GetByValue(value);
+        var signInToken = await _signInRepository.GetByValue(value, x => x.Include(x => x.Account));
+        await _signInRepository.Delete(signInToken.Id);
 
         if (signInToken.Expires < _dateTimeService.Now())
         {
             throw new AuthenticationException("Sign-in token has expired");
         }
 
-        // TODO generate JWT
+        // https://datatracker.ietf.org/doc/html/rfc7519#section-4.1
+        // https://www.iana.org/assignments/jwt/jwt.xhtml
+        var claims = new[]
+        {
+            new Claim("sub", signInToken.Account.Id.ToString()),
+            new Claim("name", signInToken.Account.Name)
+        };
+
+        var signingCredentials = new SigningCredentials(
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationOptions.JwtSecret)),
+            SecurityAlgorithms.HmacSha256);
+
+        var jwt = new JwtSecurityToken(
+            issuer: _authenticationOptions.JwtIssuer,
+            audience: _authenticationOptions.JwtAudience,
+            expires: _dateTimeService.Now().Add(_authenticationOptions.JwtExpiry),
+            claims: claims,
+            signingCredentials: signingCredentials
+        );
+
+        return $"{jwt.EncodedHeader}.{jwt.EncodedPayload}";
     }
 
     public async Task CreateAccount(CreateAccountDto dto)
     {
         var account = dto.AdaptToAccount();
 
-        await new AccountValidator(_accountRepository).ValidateAsync(account);
+        await new AccountValidator(_accountRepository).ValidateAndThrowAsync(account);
 
         await _accountRepository.Insert(account);
-        await _accountRepository.Save();
     }
 }

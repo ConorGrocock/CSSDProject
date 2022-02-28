@@ -10,10 +10,13 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
 {
     public AccountRepository(NorTollDbContext norTollDbContext) : base(norTollDbContext) { }
 
-    public async Task<Account> GetByEmail(string email)
+    public async Task<Account> GetByEmail(
+        string email,
+        Func<IQueryable<Account>, IQueryable<Account>>? query = null)
     {
-        return
-            await Set.SingleOrDefaultAsync(x => x.Email == email)
+        return await
+            ApplyQuery(query)
+            .SingleOrDefaultAsync(x => x.Email == email)
             ?? throw new EntityNotFoundException<Account>(nameof(Account.Email), email);
     }
 }

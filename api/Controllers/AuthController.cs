@@ -1,4 +1,3 @@
-using api.Models;
 using api.Models.Dtos;
 using api.Models.Options;
 using api.Services.Common.Interfaces;
@@ -6,26 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
-[ApiController]
-[Route("[controller]")]
 public class AuthController : NorTollControllerBase
 {
     private readonly IIdentityService _identityService;
+    private readonly AuthenticationOptions _authenticationOptions;
 
-    public AuthController(IIdentityService identityService)
+    public AuthController(
+        IIdentityService identityService,
+        AuthenticationOptions authenticationOptions)
     {
         _identityService = identityService;
+        _authenticationOptions = authenticationOptions;
     }
 
-    [HttpGet("signIn")]
-    public async Task<RedirectResult> SignIn([FromQuery] string token)
-    {
-        await _identityService.SignIn(token);
-
-        return Redirect(""); // TODO add frontend url
-    }
-
-    [HttpPost("signIn")]
+    [HttpPost("request")]
     public async Task<OkResult> RequestSignIn([FromQuery] string email)
     {
         await _identityService.RequestSignIn(email);
@@ -33,11 +26,13 @@ public class AuthController : NorTollControllerBase
         return Ok();
     }
 
-    [HttpPost("register")]
-    public async Task<CreatedResult> Register(CreateAccountDto dto)
+    [HttpPost("verify")]
+    public async Task<OkObjectResult> SignIn([FromQuery] string token)
     {
-        await _identityService.CreateAccount(dto);
+        var authToken = await _identityService.SignIn(token);
 
-        return Created("", null);
+        var response = new TokenDto { Token = authToken };
+
+        return Ok(response);
     }
 }

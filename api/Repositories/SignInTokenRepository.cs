@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using api.Models.Entities;
 using api.Repositories.Common;
 using api.Repositories.Common.Exceptions;
@@ -10,10 +11,13 @@ public class SignInTokenRepository : BaseRepository<SignInToken>, ISignInTokenRe
 {
     public SignInTokenRepository(NorTollDbContext norTollDbContext) : base(norTollDbContext) { }
 
-    public async Task<SignInToken> GetByValue(string value)
+    public async Task<SignInToken> GetByValue(
+        string value,
+        Func<IQueryable<SignInToken>, IQueryable<SignInToken>>? query = null)
     {
-        return
-            await Set.SingleOrDefaultAsync(x => x.Value == value)
+        return await
+            ApplyQuery(query)
+            .SingleOrDefaultAsync(x => x.Value == value)
             ?? throw new EntityNotFoundException<SignInToken>(nameof(SignInToken.Value), value);
     }
 }
