@@ -27,7 +27,7 @@ namespace api.Repositories
         {
             return await
                 Set.SingleOrDefaultAsync(x => x.Id == id)
-                ?? throw new EntityNotFoundException<T>(id);
+                ?? throw new EntityNotFoundException<T>(nameof(BaseEntity.Id), id.ToString());
         }
 
         public async Task Insert(T t)
