@@ -1,5 +1,6 @@
 using System.Text;
 
+namespace api.Models;
 public class EmailItem
 {
     public string From { get; set; } = default!;

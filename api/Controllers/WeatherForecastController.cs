@@ -1,12 +1,9 @@
-using api.Models;
-using api.Services.Interfaces;
+using api.Models.Entities;
+using api.Services.Common.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class WeatherForecastController : NorTollControllerBase
 {
     private readonly IWeatherService _weatherService;
     private readonly IEmailService _emailService;

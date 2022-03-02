@@ -1,7 +1,6 @@
-using api.Models;
+using api.Models.Entities;
 
-namespace api.Services.Interfaces;
-
+namespace api.Services.Common.Interfaces;
 public interface IWeatherService
 {
     public Task<WeatherForecast[]> GetWeatherForecast();
