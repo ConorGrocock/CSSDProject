@@ -18,14 +18,16 @@ public class WeatherForecastController : NorTollControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<WeatherForecast>> Get()
+    public async Task<ActionResult<IEnumerable<WeatherForecast>>> Get()
     {
         return await _weatherService.GetWeatherForecast();
     }
 
     [HttpPost]
-    public async Task Post(WeatherForecast weatherForecast)
+    public async Task<ActionResult> Post(WeatherForecast weatherForecast)
     {
         await _weatherService.Insert(weatherForecast);
+
+        return Created("", null);
     }
 }

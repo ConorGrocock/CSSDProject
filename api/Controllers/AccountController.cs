@@ -13,7 +13,7 @@ public class AccountController : NorTollControllerBase
     }
 
     [HttpPost]
-    public async Task<CreatedResult> Post(CreateAccountDto dto)
+    public async Task<ActionResult> Post(CreateAccountDto dto)
     {
         await _identityService.CreateAccount(dto);
 

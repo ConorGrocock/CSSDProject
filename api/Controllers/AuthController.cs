@@ -19,7 +19,7 @@ public class AuthController : NorTollControllerBase
     }
 
     [HttpPost("request")]
-    public async Task<OkResult> RequestSignIn([FromQuery] string email)
+    public async Task<ActionResult> RequestSignIn([FromQuery] string email)
     {
         await _identityService.RequestSignIn(email);
 
@@ -27,7 +27,7 @@ public class AuthController : NorTollControllerBase
     }
 
     [HttpPost("verify")]
-    public async Task<OkObjectResult> SignIn([FromQuery] string token)
+    public async Task<ActionResult> SignIn([FromQuery] string token)
     {
         var authToken = await _identityService.SignIn(token);
 
