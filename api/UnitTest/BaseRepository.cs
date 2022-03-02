@@ -77,7 +77,6 @@ public class BaseRepositoryTests
 
         // Act
         await repository.Insert(entity);
-        await repository.Save();
 
         // Assert
         var result = await context.Set<WeatherForecast>().FirstOrDefaultAsync(x => x.Id == entityId);
@@ -100,7 +99,6 @@ public class BaseRepositoryTests
 
         // Act
         await repository.Update(entity);
-        await repository.Save();
 
         // Assert
         var result = await context.Set<WeatherForecast>().FirstOrDefaultAsync(x => x.Id == entityId);
@@ -123,8 +121,6 @@ public class BaseRepositoryTests
 
         // Act
         await repository.Delete(entityId);
-        await repository.Save();
-
 
         // Assert
         var result = await context.Set<WeatherForecast>().ToListAsync();

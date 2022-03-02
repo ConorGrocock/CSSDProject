@@ -13,7 +13,6 @@ public class AccountValidator : AbstractValidator<Account>
 
         RuleFor(x => x.Email)
             .NotNull()
-            .NotEmpty()
             .EmailAddress()
             .MustAsync(async (email, ct) =>
             {

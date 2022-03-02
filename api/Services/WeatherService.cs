@@ -17,10 +17,8 @@ public class WeatherService : IWeatherService
         return (await _weatherForecastRepository.GetAll()).ToArray();
     }
 
-    public Task Insert(WeatherForecast weatherForecast)
+    public async Task Insert(WeatherForecast weatherForecast)
     {
-        _weatherForecastRepository.Insert(weatherForecast);
-
-        return Task.CompletedTask;
+        await _weatherForecastRepository.Insert(weatherForecast);
     }
 }
