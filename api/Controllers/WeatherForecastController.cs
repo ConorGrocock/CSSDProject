@@ -1,8 +1,11 @@
 using api.Models.Entities;
 using api.Services.Common.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
+
+[Authorize]
 public class WeatherForecastController : NorTollControllerBase
 {
     private readonly IWeatherService _weatherService;

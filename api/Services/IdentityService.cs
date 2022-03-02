@@ -76,9 +76,7 @@ public class IdentityService : IIdentityService
             new Claim("name", signInToken.Account.Name)
         };
 
-        var signingCredentials = new SigningCredentials(
-            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationOptions.JwtSecret)),
-            SecurityAlgorithms.HmacSha256);
+        var signingCredentials = new SigningCredentials(_authenticationOptions.JwtSecretKey, SecurityAlgorithms.HmacSha256);
 
         var jwt = new JwtSecurityToken(
             issuer: _authenticationOptions.JwtIssuer,
@@ -88,7 +86,7 @@ public class IdentityService : IIdentityService
             signingCredentials: signingCredentials
         );
 
-        return $"{jwt.EncodedHeader}.{jwt.EncodedPayload}";
+        return new JwtSecurityTokenHandler().WriteToken(jwt);
     }
 
     public async Task CreateAccount(CreateAccountDto dto)
