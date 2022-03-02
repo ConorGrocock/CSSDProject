@@ -29,7 +29,6 @@ public class NorTollDbContext : DbContext
         builder.Entity<SignInToken>()
             .HasOne(x => x.Account)
             .WithOne()
-            .HasForeignKey<SignInToken>(x => x.AccountId)
-            .IsRequired();
+            .HasForeignKey<SignInToken>(x => x.AccountId);
     }
 }
