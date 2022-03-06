@@ -82,6 +82,7 @@ public class Program
             .AddTransient<NorTollDbContext>()
             .AddTransient<IAccountRepository, AccountRepository>()
             .AddTransient<ISignInTokenRepository, SignInTokenRepository>()
+            .AddTransient<IInvoiceRepository, InvoiceRepository>()
             .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>();
     }
     private static void ConfigureServiceDependencies(WebApplicationBuilder builder)
@@ -89,6 +90,7 @@ public class Program
         builder.Services
             .AddTransient<IIdentityService, IdentityService>()
             .AddTransient<IWeatherService, WeatherService>()
+            .AddTransient<IInvoiceService, InvoiceService>()
             .AddTransient<IDateTimeService, DateTimeService>();
     }
     private static void ConfigureTestDependencies(WebApplicationBuilder builder)
@@ -140,4 +142,3 @@ public class Program
             });
     }
 }
-
