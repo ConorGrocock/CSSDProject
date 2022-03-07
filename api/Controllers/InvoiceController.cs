@@ -25,4 +25,12 @@ public class InvoiceController : NorTollControllerBase
 
         return Ok(redirectUri.ToString());
     }
+
+    [HttpPost("confirmation/{token}")]
+    public async Task<ActionResult> PaymentConfirmation([FromRoute] string token)
+    {
+        await _invoiceService.ConfirmPayment(token);
+
+        return NoContent();
+    }
 }

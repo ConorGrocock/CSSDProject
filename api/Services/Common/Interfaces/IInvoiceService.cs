@@ -7,4 +7,5 @@ public interface IInvoiceService
 {
     public Task<Invoice[]> GetInvoices();
     public Task<Uri> Pay(int invoiceId);
+    public Task ConfirmPayment(string token);
 }
