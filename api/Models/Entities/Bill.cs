@@ -9,6 +9,4 @@ public class Bill : BaseEntity
 
     public int InvoiceId { get; set; }
     public Invoice Invoice { get; set; } = default!;
-    public int JourneyId { get; set; }
-    public Journey Journey { get; set; } = default!;
 }

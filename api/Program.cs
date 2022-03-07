@@ -9,10 +9,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Microsoft.Net.Http.Headers;
+using api.Models.Entities;
+using api.Models.Enums;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public async static Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         var isDevelopment = builder.Environment.IsDevelopment();
@@ -69,9 +71,11 @@ public class Program
         app.UseAuthorization();
         app.MapControllers();
 
-        if (app.Environment.IsDevelopment())
+        if (isDevelopment)
         {
             app.UseSwagger().UseSwaggerUI();
+
+            await SeedDatabase(app);
         }
 
         app.Run();
@@ -138,6 +142,84 @@ public class Program
 
                 opt.RequireHttpsMetadata = !isDevelopment;
             });
+    }
+
+    private static async Task SeedDatabase(WebApplication app)
+    {
+        using var scope = app.Services.CreateAsyncScope();
+
+        var dbContext = scope.ServiceProvider.GetRequiredService<NorTollDbContext>();
+        var dateTimeService = scope.ServiceProvider.GetRequiredService<IDateTimeService>();
+
+        var idCounter = 1;
+
+        var driverAddress = new Address
+        {
+            Id = ++idCounter,
+            Line1 = "4 Grass Lane",
+            City = "Sheffield",
+            Country = "England",
+            Postcode = "S16HU"
+        };
+
+        var driver = new Account
+        {
+            Id = ++idCounter,
+            Name = "john the driver",
+            Email = "john@email.com",
+            Role = Role.Driver,
+            PostalAddressId = driverAddress.Id
+        };
+
+        var tollOperatorAddress = new Address
+        {
+            Id = ++idCounter,
+            Line1 = "12 High Lane",
+            City = "Buxton",
+            Country = "England",
+            Postcode = "SK171SB"
+        };
+
+        var tollOperator = new Account
+        {
+            Id = ++idCounter,
+            Name = "steve the toll operator",
+            Email = "steve@email.com",
+            Role = Role.TollOperator,
+            PostalAddressId = tollOperatorAddress.Id
+        };
+
+        var createInvoice = (int[] billAmounts) =>
+        {
+            var invoice = new Invoice
+            {
+                Id = ++idCounter,
+                AccountId = driver.Id,
+                PostalAddressId = driverAddress.Id,
+                PaymentReference = Guid.NewGuid().ToString(),
+                IssuedAt = dateTimeService.Now()
+            };
+
+            invoice.Bills.AddRange(billAmounts.Select(amt => new Bill
+            {
+                Id = ++idCounter,
+                Amount = amt,
+                IssuedAt = dateTimeService.Now(),
+            }));
+
+            return invoice;
+        };
+
+        await dbContext.AddRangeAsync(
+            driverAddress,
+            tollOperatorAddress,
+            driver,
+            tollOperator,
+            createInvoice(new[] { 13, 20, 5 }),
+            createInvoice(new[] { 3 }),
+            createInvoice(new[] { 34, 27 }));
+
+        await dbContext.SaveChangesAsync();
     }
 }
 
