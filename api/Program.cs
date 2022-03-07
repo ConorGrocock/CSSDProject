@@ -11,6 +11,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Net.Http.Headers;
 using api.Models.Entities;
 using api.Models.Enums;
+using System.IdentityModel.Tokens.Jwt;
+using api.Services.Common;
 
 public class Program
 {
@@ -23,7 +25,9 @@ public class Program
             opt.UseInMemoryDatabase("api")
         );
 
+
         builder.Services.AddControllers();
+        builder.Services.AddHttpContextAccessor();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(opt =>
         {
@@ -33,7 +37,7 @@ public class Program
                 Type = SecuritySchemeType.Http,
                 In = ParameterLocation.Header,
                 Name = HeaderNames.Authorization,
-                Scheme = "Bearer",
+                Scheme = "bearer",
                 BearerFormat = "JWT",
                 Description = "Provided by /auth/request and /auth/verify",
             });
@@ -86,14 +90,18 @@ public class Program
             .AddTransient<NorTollDbContext>()
             .AddTransient<IAccountRepository, AccountRepository>()
             .AddTransient<ISignInTokenRepository, SignInTokenRepository>()
-            .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>();
+            .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>()
+            .AddTransient<IInvoiceRepository, InvoiceRepository>()
+            .AddTransient<IPaymentConfirmationTokenRepository, PaymentConfirmationTokenRepository>();
     }
     private static void ConfigureServiceDependencies(WebApplicationBuilder builder)
     {
         builder.Services
             .AddTransient<IIdentityService, IdentityService>()
             .AddTransient<IWeatherService, WeatherService>()
-            .AddTransient<IDateTimeService, DateTimeService>();
+            .AddTransient<IDateTimeService, DateTimeService>()
+            .AddTransient<IInvoiceService, InvoiceService>()
+            .AddTransient<IExternalPaymentProviderService, TestExternalPaymentProviderService>();
     }
     private static void ConfigureTestDependencies(WebApplicationBuilder builder)
     {
@@ -108,6 +116,7 @@ public class Program
             => builder.Services.AddSingleton(GetOptions<T>(builder));
 
         ConfigureOptions<AuthenticationOptions>();
+        ConfigureOptions<PaymentOptions>();
     }
 
     private static T GetOptions<T>(WebApplicationBuilder builder) where T : class
@@ -119,6 +128,8 @@ public class Program
 
     private static void ConfigureAuthentication(WebApplicationBuilder builder, bool isDevelopment)
     {
+        // prevent mapping away from NorTollClaimNames
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
         builder.Services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -137,7 +148,10 @@ public class Program
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = authenticationOptions.JwtSecretKey,
 
-                    ValidateLifetime = true
+                    ValidateLifetime = true,
+
+                    NameClaimType = NorTollClaimNames.Name,
+                    RoleClaimType = NorTollClaimNames.Role
                 };
 
                 opt.RequireHttpsMetadata = !isDevelopment;
