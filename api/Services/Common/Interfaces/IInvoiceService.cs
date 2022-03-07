@@ -6,5 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.Services.Common.Interfaces;
 public interface IInvoiceService
 {
-    Task<InvoiceDto> GetInvoices();
+    Task<List<InvoiceDto>> GetInvoices();
+
+    Task<InvoiceDto> GetInvoice(int id);
+    // Task<InvoiceDto> GetInvoice(int id);
 }

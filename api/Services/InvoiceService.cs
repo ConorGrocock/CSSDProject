@@ -1,6 +1,7 @@
 using api.Models.Dtos;
 using api.Services.Common.Interfaces;
 using api.Repositories.Common.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Services;
 
@@ -14,10 +15,22 @@ public class InvoiceService : IInvoiceService
         _invoiceRepository = invoiceRepository;
     }
 
-    public async Task<InvoiceDto> GetInvoices()
+    public async Task<List<InvoiceDto>> GetInvoices()
     {
+        var listOfInvoices = new List<InvoiceDto>();
         var invoices = await _invoiceRepository.GetAll();
-        var invoiceDto = new InvoiceDto {Invoices = invoices};
-        return invoiceDto;
+        
+        foreach (var invoice in invoices)
+        {
+            listOfInvoices.Add(InvoiceMapper.AdaptToDto(invoice));
+        }
+        
+        return listOfInvoices;
+    }
+
+    public async Task<InvoiceDto> GetInvoice(int id)
+    {
+        var invoice = await _invoiceRepository.Get(id);
+        return InvoiceMapper.AdaptToDto(invoice);
     }
 }
