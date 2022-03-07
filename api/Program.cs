@@ -23,12 +23,22 @@ public class Program
 {
     public async static Task Main(string[] args)
     {
+        var corsPolicy = "development";
+        var LocalFrontend = "http://localhost:3001";
         var builder = WebApplication.CreateBuilder(args);
         var isDevelopment = builder.Environment.IsDevelopment();
 
         builder.Services.AddDbContextPool<NorTollDbContext>(opt =>
             opt.UseInMemoryDatabase("api")
         );
+        
+        builder.Services.AddCors(options => {
+            options.AddPolicy(corsPolicy, builder => {
+                builder.WithOrigins(LocalFrontend);
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+            });
+        });
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
@@ -72,6 +82,7 @@ public class Program
         }
 
         var app = builder.Build();
+        app.UseCors(corsPolicy);
 
         app.UseHttpsRedirection();
         app.UseAuthentication();
