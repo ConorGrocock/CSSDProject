@@ -1,18 +1,11 @@
-﻿namespace api.Repositories.Common.Exceptions
+﻿using api.Models.Common;
+using api.Models.Exceptions;
+
+namespace api.Repositories.Common.Exceptions
 {
-    public class EntityNotFoundException : Exception
+    public class EntityNotFoundException<T> : NotFoundException where T : BaseEntity
     {
-
-        public EntityNotFoundException(int id, string entityName)
-            : base($"{entityName} with ID {id} was not found")
-        {
-        }
-    }
-
-    public class EntityNotFoundException<T> : EntityNotFoundException
-    {
-        public EntityNotFoundException(int id) : base(id, typeof(T).FullName ?? "Entity")
-        {
-        }
+        public EntityNotFoundException(string field, string expectedValue)
+            : base($"{typeof(T).Name} with {field}={expectedValue} was not found") { }
     }
 }

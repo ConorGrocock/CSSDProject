@@ -1,32 +1,33 @@
-using api.Models;
-using api.Services.Interfaces;
+using api.Models.Entities;
+using api.Services.Common.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+[Authorize]
+public class WeatherForecastController : NorTollControllerBase
 {
-
-    private readonly ILogger<WeatherForecastController> _logger;
     private readonly IWeatherService _weatherService;
+    private readonly IEmailService _emailService;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherService weatherService)
+    public WeatherForecastController(IWeatherService weatherService, IEmailService emailService)
     {
-        _logger = logger;
         _weatherService = weatherService;
+        _emailService = emailService;
     }
 
     [HttpGet]
-    public async Task<IEnumerable<WeatherForecast>> Get()
+    public async Task<ActionResult<IEnumerable<WeatherForecast>>> Get()
     {
         return await _weatherService.GetWeatherForecast();
     }
 
     [HttpPost]
-    public async Task Post(WeatherForecast weatherForecast)
+    public async Task<ActionResult> Post(WeatherForecast weatherForecast)
     {
         await _weatherService.Insert(weatherForecast);
+
+        return Created("", null);
     }
 }

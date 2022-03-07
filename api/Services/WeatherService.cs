@@ -1,9 +1,8 @@
-using api.Models;
+using api.Models.Entities;
 using api.Repositories.Common.Interfaces;
-using api.Services.Interfaces;
+using api.Services.Common.Interfaces;
 
 namespace api.Services;
-
 public class WeatherService : IWeatherService
 {
     private readonly IWeatherForecastRepository _weatherForecastRepository;
@@ -18,10 +17,8 @@ public class WeatherService : IWeatherService
         return (await _weatherForecastRepository.GetAll()).ToArray();
     }
 
-    public Task Insert(WeatherForecast weatherForecast)
+    public async Task Insert(WeatherForecast weatherForecast)
     {
-        _weatherForecastRepository.Insert(weatherForecast);
-
-        return Task.CompletedTask;
+        await _weatherForecastRepository.Insert(weatherForecast);
     }
 }

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using api.Models;
+using api.Models.Entities;
 using api.Repositories;
 using api.Repositories.Common;
 using api.Repositories.Common.Exceptions;
@@ -77,14 +77,12 @@ public class BaseRepositoryTests
 
         // Act
         await repository.Insert(entity);
-        await repository.Save();
 
         // Assert
         var result = await context.Set<WeatherForecast>().FirstOrDefaultAsync(x => x.Id == entityId);
 
         Assert.NotNull(result);
     }
-
 
     [Fact]
     public async Task CanUpdate()
@@ -101,7 +99,6 @@ public class BaseRepositoryTests
 
         // Act
         await repository.Update(entity);
-        await repository.Save();
 
         // Assert
         var result = await context.Set<WeatherForecast>().FirstOrDefaultAsync(x => x.Id == entityId);
@@ -124,13 +121,11 @@ public class BaseRepositoryTests
 
         // Act
         await repository.Delete(entityId);
-        await repository.Save();
-
 
         // Assert
         var result = await context.Set<WeatherForecast>().ToListAsync();
 
-        Assert.Equal(0, result.Count);
+        Assert.Empty(result);
     }
 
     private async Task<(NorTollDbContext, IBaseRepository<WeatherForecast>)> GetRepository()
