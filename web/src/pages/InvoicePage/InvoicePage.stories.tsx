@@ -4,7 +4,7 @@ import {ComponentMeta, ComponentStory} from '@storybook/react';
 import InvoicePage from "./InvoicePage";
 
 export default {
-    title: 'Components/InvoicePage',
+    title: 'Pages/InvoicePage',
     component: InvoicePage,
     argTypes: {},
 } as ComponentMeta<typeof InvoicePage>;
