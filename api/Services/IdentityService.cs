@@ -11,12 +11,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using FluentValidation;
+using api.Services.Common;
 
 namespace api.Services;
 public class IdentityService : IIdentityService
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly ISignInTokenRepository _signInRepository;
+    private readonly ISignInTokenRepository _signInTokenRepository;
     private readonly IEmailService _emailService;
     private readonly IDateTimeService _dateTimeService;
     private readonly AuthenticationOptions _authenticationOptions;
@@ -29,7 +30,7 @@ public class IdentityService : IIdentityService
         AuthenticationOptions authenticationOptions)
     {
         _accountRepository = accountRepository;
-        _signInRepository = signInRepository;
+        _signInTokenRepository = signInRepository;
         _emailService = emailService;
         _dateTimeService = dateTimeService;
         _authenticationOptions = authenticationOptions;
@@ -46,7 +47,7 @@ public class IdentityService : IIdentityService
             AccountId = account.Id
         };
 
-        await _signInRepository.Insert(signInToken);
+        await _signInTokenRepository.Insert(signInToken);
 
         var signInUrl = string.Format(_authenticationOptions.SignInUrlFormat, signInToken.Value);
 
@@ -59,8 +60,8 @@ public class IdentityService : IIdentityService
 
     public async Task<string> SignIn(string value)
     {
-        var signInToken = await _signInRepository.GetByValue(value, x => x.Include(x => x.Account));
-        await _signInRepository.Delete(signInToken.Id);
+        var signInToken = await _signInTokenRepository.GetByValue(value, x => x.Include(x => x.Account));
+        await _signInTokenRepository.Delete(signInToken.Id);
 
         if (signInToken.Expires < _dateTimeService.Now())
         {
@@ -71,11 +72,14 @@ public class IdentityService : IIdentityService
         // https://www.iana.org/assignments/jwt/jwt.xhtml
         var claims = new[]
         {
-            new Claim("sub", signInToken.Account.Id.ToString()),
-            new Claim("name", signInToken.Account.Name)
+            new Claim(NorTollClaimNames.Name, signInToken.Account.Id.ToString()),
+            new Claim(NorTollClaimNames.HumanName, signInToken.Account.Name),
+            new Claim(NorTollClaimNames.Role, signInToken.Account.Role.ToString()),
         };
 
-        var signingCredentials = new SigningCredentials(_authenticationOptions.JwtSecretKey, SecurityAlgorithms.HmacSha256);
+        var signingCredentials = new SigningCredentials(
+            _authenticationOptions.JwtSecretKey,
+            SecurityAlgorithms.HmacSha256);
 
         var jwt = new JwtSecurityToken(
             issuer: _authenticationOptions.JwtIssuer,
