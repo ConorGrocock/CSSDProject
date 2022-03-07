@@ -31,7 +31,7 @@ public class Program
                 Type = SecuritySchemeType.Http,
                 In = ParameterLocation.Header,
                 Name = HeaderNames.Authorization,
-                Scheme = "Bearer",
+                Scheme = "bearer",
                 BearerFormat = "JWT",
                 Description = "Provided by /auth/request and /auth/verify",
             });

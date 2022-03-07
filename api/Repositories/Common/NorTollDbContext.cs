@@ -23,7 +23,7 @@ public class NorTollDbContext : DbContext
         builder.Entity<Address>().HasKey(x => x.Id);
         builder.Entity<Account>().HasKey(x => x.Id);
         builder.Entity<SignInToken>().HasKey(x => x.Id);
-        builder.Entity<Bill>().HasKey(x => x.Id); 
+        builder.Entity<Bill>().HasKey(x => x.Id);
         builder.Entity<Journey>().HasKey(x => x.Id);
         builder.Entity<PaymentConfirmation>().HasKey(x => x.Id);
 
@@ -49,7 +49,7 @@ public class NorTollDbContext : DbContext
             .WithOne()
             .HasForeignKey<Bill>(x => x.JourneyId)
             .IsRequired();
-        
+
         builder.Entity<Invoice>()
             .HasOne(x => x.PostalAddress)
             .WithOne()
@@ -70,20 +70,31 @@ public class NorTollDbContext : DbContext
             .HasOne(x => x.Account)
             .WithOne()
             .HasForeignKey<Invoice>(x => x.AccountId);
-        
+
         builder.Entity<PaymentConfirmation>()
             .HasOne(x => x.Invoice)
             .WithOne()
             .HasForeignKey<PaymentConfirmation>(x => x.InvoiceId)
             .IsRequired();
+
+        var account = new Account
+        {
+            Id = -1,
+            Email = "qwe321",
+            Name = "Test"
+        };
+    
+
+        var invoice = new Invoice
+        {
+            Id = -1,
+            AccountId = -1,
+            PaymentReference = "dfsjkhdsfjdfjk",
+            Amount = new decimal(12.21)
+        };
         
         
-        builder.Entity<WeatherForecast>().HasData(new WeatherForecast() );
-        builder.Entity<Address>().HasData(new Address() );
-        builder.Entity<Account>().HasData(new Account() );
-        builder.Entity<SignInToken>().HasData(new SignInToken() );
-        builder.Entity<Bill>().HasData(new Bill() );
-        builder.Entity<Journey>().HasData(new Journey() );
-        builder.Entity<PaymentConfirmation>().HasData(new PaymentConfirmation() );
+        builder.Entity<Invoice>().HasData(invoice);
+        
     }
 }
