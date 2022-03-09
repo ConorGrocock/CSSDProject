@@ -1,4 +1,12 @@
 import './App.css';
+<<<<<<< HEAD
+=======
+import React, { useState } from 'react';
+import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom"
+import "bootstrap/dist/css/bootstrap.min.css";
+import HomePage from "../src/pages/HomePage/HomePage"
+import LoginPage from './pages/LoginPage/LoginPage';
+>>>>>>> 6a8db47 (map over invoices)
 
 function App() {
   return (
