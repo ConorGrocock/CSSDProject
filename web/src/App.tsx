@@ -1,12 +1,8 @@
 import './App.css';
-<<<<<<< HEAD
-=======
 import React, { useState } from 'react';
-import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "../src/pages/HomePage/HomePage"
-import LoginPage from './pages/LoginPage/LoginPage';
->>>>>>> 6a8db47 (map over invoices)
 
 function App() {
   return (
@@ -24,8 +20,23 @@ function App() {
           Learn React
         </a>
       </header>
+      <div>
+        <Router>
+          <nav className="navbar navbar-expand navbar-dark" style={{ backgroundColor: "#61DBAE" }}>
+            <a className="navbar-brand">⠀<i>Nordic Department of Transport</i></a>
+
+          </nav>
+          <div className="container mt-3">
+            <Routes>
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/users" element={<HomePage />} />
+            </Routes>
+          </div>
+        </Router>
+      </div>
     </div>
   );
 }
+
 
 export default App;
