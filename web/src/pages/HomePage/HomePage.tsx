@@ -10,7 +10,7 @@ const HomePage = ()  => {
         bill: string;
     }
 
-    const invoices : Invoice[]= [{id: 1, name: "hello", bill: "bill"}, {id: 2, name: "hello1", bill: "bill1"}, {id: 3, name: "hello2", bill: "bill3"}];
+    const invoices : Invoice[]= [{id: 1, name: "Rob", bill: "bill"}, {id: 2, name: "Matt", bill: "bill1"}, {id: 3, name: "Frank", bill: "bill3"}];
     
     console.log(invoices)
     return(
@@ -25,10 +25,10 @@ const HomePage = ()  => {
             <hr></hr>
             <div>
             <div className="d-flex justify-content-between">
-                <div><h4>Name</h4></div>    
-                <div><h4>RFID Tag</h4></div>    
-                <div><h4>Distance</h4></div>    
-                <div><h4>Bill</h4></div>   
+                <div><h4><b>Name</b></h4></div>    
+                <div><h4><b>RFID Tag</b></h4></div>    
+                <div><h4><b>Distance</b></h4></div>    
+                <div><h4><b>Bill</b></h4></div>   
                
             </div>
              <hr></hr> 

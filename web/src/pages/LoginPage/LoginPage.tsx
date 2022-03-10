@@ -8,6 +8,7 @@ import logo from "../../assets/road.png"
 const LoginPage = () => {
 
     const navigate = useNavigate();
+    
     const onSuccess = () => {
         navigate("/home");
         window.location.reload();
