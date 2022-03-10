@@ -32,6 +32,12 @@ function App() {
               <Route path="/users" element={<HomePage />} />
             </Routes>
           </div>
+          <div className="container mt-3 ">
+            <Routes>
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/users" element={<HomePage />} />
+            </Routes>
+          </div>
         </Router>
       </div>
     </div>
