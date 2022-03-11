@@ -12,15 +12,15 @@ const PaymentPage = () => {
     }
     
     return(
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center pt-3">
             <div className="w-50">
                 <Form onSubmit={handlePayment}>
                     <Form.Group className="mb-3">
-                        <Form.Label style={{fontSize: 20}}>Card-Holder Name</Form.Label>
+                        <Form.Label className="pt-4" style={{fontSize: 20}}>Card-Holder Name</Form.Label>
                         <Form.Control size="lg" type="string" name="name" placeholder="Card-Holder Name..." required/>
-                        <Form.Label style={{fontSize: 20}}>Card Number</Form.Label>
+                        <Form.Label className="pt-4" style={{fontSize: 20}}>Card Number</Form.Label>
                         <Form.Control size="lg" type="number" name="cardNumber" placeholder="Enter card number..." required/>
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between pt-4">
                             <div>
                                 <Form.Label style={{fontSize: 20}}>Expiring Date</Form.Label>
                                 <Form.Control size="lg" type="date" name="date" placeholder="Enter date..." required/>
@@ -31,11 +31,11 @@ const PaymentPage = () => {
                             </div> 
                         </div>
                     </Form.Group>
-                    <div className="d-flex justify-content-between">
-                    <Button style={{width: 200, height: 40}} variant="danger" type="submit"> 
+                    <div className="d-flex justify-content-between pt-4">
+                    <Button style={{width: "10em", height: "3em"}} variant="danger" type="submit"> 
                         Cancel
                     </Button>
-                    <Button style={{width: 200, height: 40}} variant="success" type="submit"> 
+                    <Button style={{width: "10em", height: "3em"}} variant="success" type="submit"> 
                         Pay
                     </Button>
                     </div>

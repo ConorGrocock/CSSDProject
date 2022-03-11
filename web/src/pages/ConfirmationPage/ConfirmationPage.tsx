@@ -15,8 +15,8 @@ const ConfirmationPage = () => {
                     <p style={{fontSize:34, textAlign: "center"}}>You will soon receive an email with payment confirmation details. Thank you</p>
                 </div>
             </div>
-            <div className="d-flex justify-content-between">
-                <button className="btn btn-info" style={{color: "white"}}>Back</button>
+            <div className="d-flex justify-content-between pt-5">
+                <button className="btn btn-info" style={{color: "white", width: "5em", height: "3em"}}>Back</button>
                 <h4><i>The Nordic Department of Transport</i></h4>
             </div>
         </div>
