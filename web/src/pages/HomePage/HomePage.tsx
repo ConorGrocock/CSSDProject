@@ -1,8 +1,15 @@
 import React from "react";
-import Button from "react-bootstrap"
+import { useNavigate } from "react-router-dom";
 
 
 const HomePage = ()  => {
+    
+  const navigate = useNavigate();
+
+  const onPay = () => {
+        navigate("/payment");
+        window.location.reload();
+    }
 
     interface Invoice {
         id: number;
@@ -52,7 +59,7 @@ const HomePage = ()  => {
                   </h4>
                 </div>
                 <div>
-                    <button className="btn btn-success">Pay</button>
+                    <button className="btn btn-success" onClick={() => onPay()}>Pay</button>
                 </div>
               </div>
               <hr></hr>
