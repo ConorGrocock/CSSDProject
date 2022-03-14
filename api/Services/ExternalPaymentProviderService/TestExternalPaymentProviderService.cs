@@ -44,6 +44,9 @@ public class TestExternalPaymentProviderService : IExternalPaymentProviderServic
         _logger.LogInformation(token.ToString());
 
         // redirect to frontend homepage
-        return new Uri(_httpContextAccessor.HttpContext?.Request.Headers.Referer);
+        return new Uri(string.Format(
+            _paymentOptions.ExternalPaymentProviderUrlFormat,
+            token.Value
+        ));
     }
 }
