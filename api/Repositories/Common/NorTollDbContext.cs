@@ -25,6 +25,7 @@ public class NorTollDbContext : DbContext
         builder.Entity<Address>().HasKey(x => x.Id);
         builder.Entity<Account>().HasKey(x => x.Id);
         builder.Entity<SignInToken>().HasKey(x => x.Id);
+        builder.Entity<Invoice>().HasKey(x => x.Id);
         builder.Entity<Bill>().HasKey(x => x.Id);
         builder.Entity<PaymentConfirmation>().HasKey(x => x.Id);
         builder.Entity<PaymentConfirmationToken>().HasKey(x => x.Id);
@@ -52,9 +53,9 @@ public class NorTollDbContext : DbContext
             .IsRequired();
 
         builder.Entity<Invoice>()
-            .HasOne(x => x.Account)
-            .WithOne()
-            .HasForeignKey<Invoice>(x => x.AccountId);
+            .HasOne<Account>(x => x.Account)
+            .WithMany(x => x.Invoices)
+            .HasForeignKey(x => x.AccountId);
 
         builder.Entity<Invoice>()
             .HasOne(x => x.PaymentConfirmation)
