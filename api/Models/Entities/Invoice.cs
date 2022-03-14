@@ -12,6 +12,9 @@ public class Invoice : BaseEntity
     public Account Account { get; set; } = default!;
     public int PostalAddressId { get; set; }
     public Address PostalAddress { get; set; } = default!;
+    
+    public int? PaymentConfirmationId { get; set; }
+    public PaymentConfirmation? PaymentConfirmation { get; set; } = default!;
 
     public List<Bill> Bills { get; } = new List<Bill>();
 }
