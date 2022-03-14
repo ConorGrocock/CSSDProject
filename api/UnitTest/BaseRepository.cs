@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using api.Models.Entities;
 using api.Repositories;
@@ -34,7 +35,7 @@ public class BaseRepositoryTests
     public async Task CanGetById()
     {
         // Arrange
-        var entityId = 123;
+        var entityId = Guid.NewGuid();
         var entity = new WeatherForecast { Id = entityId };
 
         var (context, repository) = await GetRepository();
@@ -54,7 +55,7 @@ public class BaseRepositoryTests
     public async Task GetByIdThrowsWhenEntityMissing()
     {
         // Arrange
-        var entityId = 123;
+        var entityId = Guid.NewGuid();
         var entity = new WeatherForecast { Id = entityId };
 
         var (context, repository) = await GetRepository();
@@ -63,14 +64,14 @@ public class BaseRepositoryTests
         await context.SaveChangesAsync();
 
         // Act, Assert
-        await Assert.ThrowsAsync<EntityNotFoundException<WeatherForecast>>(() => repository.Get(0));
+        await Assert.ThrowsAsync<EntityNotFoundException<WeatherForecast>>(() => repository.Get(entityId));
     }
 
     [Fact]
     public async Task CanInsert()
     {
         // Arrange
-        var entityId = 123;
+        var entityId = Guid.NewGuid();
         var entity = new WeatherForecast { Id = entityId };
 
         var (context, repository) = await GetRepository();
@@ -88,7 +89,7 @@ public class BaseRepositoryTests
     public async Task CanUpdate()
     {
         // Arrange
-        var entityId = 123;
+        var entityId = Guid.NewGuid();
         var entity = new WeatherForecast { Id = entityId };
 
         var (context, repository) = await GetRepository();
@@ -112,7 +113,7 @@ public class BaseRepositoryTests
     public async Task CanDelete()
     {
         // Arrange
-        var entityId = 123;
+        var entityId = Guid.NewGuid();
         var entity = new WeatherForecast { Id = entityId };
 
         var (context, repository) = await GetRepository();

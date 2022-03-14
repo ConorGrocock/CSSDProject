@@ -19,7 +19,7 @@ public class InvoiceController : NorTollControllerBase
     }
 
     [HttpGet("payment/{invoiceId}"), Authorize]
-    public async Task<ActionResult<string>> Payment([FromRoute] int invoiceId)
+    public async Task<ActionResult<string>> Payment([FromRoute] Guid invoiceId)
     {
         var redirectUri = await _invoiceService.Pay(invoiceId);
 

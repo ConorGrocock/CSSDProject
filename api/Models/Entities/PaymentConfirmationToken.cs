@@ -8,7 +8,7 @@ public class PaymentConfirmationToken : BaseEntity, IToken
     public string Value { get; set; } = default!;
     public DateTime Expires { get; set; }
 
-    public int InvoiceId { get; set; }
+    public Guid InvoiceId { get; set; }
     public Invoice Invoice { get; set; } = default!;
 
     public override string ToString()

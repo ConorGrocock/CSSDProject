@@ -104,9 +104,9 @@ public class IdentityService : IIdentityService
         await _accountRepository.Insert(account);
     }
 
-    public int GetCurrentAccountId()
+    public Guid GetCurrentAccountId()
     {
-        if (!int.TryParse(
+        if (!Guid.TryParse(
             _httpContextAccessor.HttpContext?.User?.FindFirstValue(NorTollClaimNames.Name), out var id))
         {
             throw new AuthenticationException("No user is signed in");

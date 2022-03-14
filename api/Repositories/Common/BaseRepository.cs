@@ -17,12 +17,12 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
         Set = _norTollDbContext.Set<T>();
     }
 
-    public Task<IQueryable<T>> GetAll()
+    public Task<IQueryable<T>> GetAll(Func<IQueryable<T>, IQueryable<T>>? query = null)
     {
-        return Task.FromResult(Set.AsQueryable());
+        return Task.FromResult(ApplyQuery(query));
     }
 
-    public async Task<T> Get(int id, Func<IQueryable<T>, IQueryable<T>>? query = null)
+    public async Task<T> Get(Guid id, Func<IQueryable<T>, IQueryable<T>>? query = null)
     {
         return await (query is null ? Set : query(Set))
             .SingleOrDefaultAsync(x => x.Id == id)
@@ -43,7 +43,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
         await _norTollDbContext.SaveChangesAsync();
     }
 
-    public async Task Delete(int id)
+    public async Task Delete(Guid id)
     {
         _norTollDbContext.Entry(await Get(id)).State = EntityState.Deleted;
 

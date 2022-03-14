@@ -1,4 +1,4 @@
-namespace api.Models.Entities;
+namespace api.Models.Enums;
 
 public enum PaymentMethod
 {

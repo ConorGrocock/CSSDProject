@@ -165,11 +165,9 @@ public class Program
         var dbContext = scope.ServiceProvider.GetRequiredService<NorTollDbContext>();
         var dateTimeService = scope.ServiceProvider.GetRequiredService<IDateTimeService>();
 
-        var idCounter = 1;
-
         var driverAddress = new Address
         {
-            Id = ++idCounter,
+            Id = Guid.NewGuid(),
             Line1 = "4 Grass Lane",
             City = "Sheffield",
             Country = "England",
@@ -178,7 +176,7 @@ public class Program
 
         var driver = new Account
         {
-            Id = ++idCounter,
+            Id = Guid.NewGuid(),
             Name = "john the driver",
             Email = "john@email.com",
             Role = Role.Driver,
@@ -187,7 +185,7 @@ public class Program
 
         var tollOperatorAddress = new Address
         {
-            Id = ++idCounter,
+            Id = Guid.NewGuid(),
             Line1 = "12 High Lane",
             City = "Buxton",
             Country = "England",
@@ -196,7 +194,7 @@ public class Program
 
         var tollOperator = new Account
         {
-            Id = ++idCounter,
+            Id = Guid.NewGuid(),
             Name = "steve the toll operator",
             Email = "steve@email.com",
             Role = Role.TollOperator,
@@ -207,7 +205,7 @@ public class Program
         {
             var invoice = new Invoice
             {
-                Id = ++idCounter,
+                Id = Guid.NewGuid(),
                 AccountId = driver.Id,
                 PostalAddressId = driverAddress.Id,
                 PaymentReference = Guid.NewGuid().ToString(),
@@ -216,7 +214,7 @@ public class Program
 
             invoice.Bills.AddRange(billAmounts.Select(amt => new Bill
             {
-                Id = ++idCounter,
+                Id = Guid.NewGuid(),
                 Amount = amt,
                 IssuedAt = dateTimeService.Now(),
             }));

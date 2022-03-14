@@ -1,9 +1,9 @@
 using api.Models.Entities;
+using api.Models.Enums;
 using api.Models.Exceptions;
 using api.Repositories.Common.Interfaces;
 using api.Services.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Policy;
 
 namespace api.Services;
 
@@ -37,7 +37,7 @@ public class InvoiceService : IInvoiceService
         return (await _invoiceRepository.GetAll()).ToArray();
     }
 
-    public async Task<Uri> Pay(int invoiceId)
+    public async Task<Uri> Pay(Guid invoiceId)
     {
         var invoice = await _invoiceRepository.Get(invoiceId);
 
@@ -70,7 +70,7 @@ public class InvoiceService : IInvoiceService
         var invoice = token.Invoice;
 
         // FIXME id assignment
-        invoice.PaymentConfirmationId = 1000 + (new Random().Next() % 1000);
+        invoice.PaymentConfirmationId = Guid.NewGuid();
         invoice.PaymentConfirmation = new PaymentConfirmation
         {
             Id = invoice.PaymentConfirmationId.Value,
