@@ -9,7 +9,7 @@ export type PostApiAuthVerifyParams = { token?: string };
 export type PostApiAuthRequestParams = { email?: string };
 
 export interface WeatherForecast {
-  id?: number;
+  id?: string;
   date?: string;
   temperatureC?: number;
   readonly temperatureF?: number;
