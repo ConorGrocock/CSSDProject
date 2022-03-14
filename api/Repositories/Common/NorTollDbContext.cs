@@ -12,6 +12,7 @@ public class NorTollDbContext : DbContext
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Bill> Bills { get; set; }
     public DbSet<PaymentConfirmation> PaymentConfirmations { get; set; }
+    public DbSet<PaymentConfirmationToken> PaymentConfirmationTokens { get; set; }
     public DbSet<SignInToken> SignInTokens { get; set; }
     public DbSet<WeatherForecast> WeatherForecasts { get; set; }
 
@@ -24,8 +25,10 @@ public class NorTollDbContext : DbContext
         builder.Entity<Address>().HasKey(x => x.Id);
         builder.Entity<Account>().HasKey(x => x.Id);
         builder.Entity<SignInToken>().HasKey(x => x.Id);
+        builder.Entity<Invoice>().HasKey(x => x.Id);
         builder.Entity<Bill>().HasKey(x => x.Id);
         builder.Entity<PaymentConfirmation>().HasKey(x => x.Id);
+        builder.Entity<PaymentConfirmationToken>().HasKey(x => x.Id);
 
         builder.Entity<Account>()
             .HasOne(x => x.PostalAddress)
@@ -50,14 +53,19 @@ public class NorTollDbContext : DbContext
             .IsRequired();
 
         builder.Entity<Invoice>()
-            .HasOne(x => x.Account)
-            .WithOne()
-            .HasForeignKey<Invoice>(x => x.AccountId);
+            .HasOne<Account>(x => x.Account)
+            .WithMany(x => x.Invoices)
+            .HasForeignKey(x => x.AccountId);
 
-        builder.Entity<PaymentConfirmation>()
+        builder.Entity<Invoice>()
+            .HasOne(x => x.PaymentConfirmation)
+            .WithOne(x => x.Invoice)
+            .HasForeignKey<Invoice>(x => x.PaymentConfirmationId);
+
+        builder.Entity<PaymentConfirmationToken>()
             .HasOne(x => x.Invoice)
             .WithOne()
-            .HasForeignKey<PaymentConfirmation>(x => x.InvoiceId)
+            .HasForeignKey<PaymentConfirmationToken>(x => x.InvoiceId)
             .IsRequired();
     }
 }

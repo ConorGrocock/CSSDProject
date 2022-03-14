@@ -20,6 +20,7 @@ public class IdentityService : IIdentityService
     private readonly ISignInTokenRepository _signInTokenRepository;
     private readonly IEmailService _emailService;
     private readonly IDateTimeService _dateTimeService;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly AuthenticationOptions _authenticationOptions;
 
     public IdentityService(
@@ -27,12 +28,14 @@ public class IdentityService : IIdentityService
         ISignInTokenRepository signInRepository,
         IEmailService emailService,
         IDateTimeService dateTimeService,
+        IHttpContextAccessor httpContextAccessor,
         AuthenticationOptions authenticationOptions)
     {
         _accountRepository = accountRepository;
         _signInTokenRepository = signInRepository;
         _emailService = emailService;
         _dateTimeService = dateTimeService;
+        _httpContextAccessor = httpContextAccessor;
         _authenticationOptions = authenticationOptions;
     }
 
@@ -99,5 +102,16 @@ public class IdentityService : IIdentityService
         await new AccountValidator(_accountRepository).ValidateAndThrowAsync(account);
 
         await _accountRepository.Insert(account);
+    }
+
+    public int GetCurrentAccountId()
+    {
+        if (!int.TryParse(
+            _httpContextAccessor.HttpContext?.User?.FindFirstValue(NorTollClaimNames.Name), out var id))
+        {
+            throw new AuthenticationException("No user is signed in");
+        }
+
+        return id;
     }
 }

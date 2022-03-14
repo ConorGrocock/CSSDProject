@@ -1,7 +1,7 @@
 ﻿using api.Models.Common;
 using api.Repositories.Common;
 using api.Repositories.Common.Exceptions;
-using api.Repositories.Interfaces;
+using api.Repositories.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories;

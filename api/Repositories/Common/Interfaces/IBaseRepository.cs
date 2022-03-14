@@ -1,6 +1,6 @@
 ﻿using api.Models.Common;
 
-namespace api.Repositories.Interfaces;
+namespace api.Repositories.Common.Interfaces;
 
 public interface IBaseRepository<T> where T : BaseEntity
 {
