@@ -7,6 +7,6 @@ public class BaseEntityValidator : AbstractValidator<BaseEntity>
 {
     public BaseEntityValidator()
     {
-        RuleFor(x => x.Id).NotNull().GreaterThan(0);
+        RuleFor(x => x.Id).NotNull().NotEqual(Guid.Empty);
     }
 }
