@@ -16,47 +16,21 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.16.0" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <Compile Remove="UnitTest\**" />
+    <Compile Remove="Tests\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="UnitTest\**" />
+    <EmbeddedResource Remove="Tests\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="UnitTest\**" />
+    <None Remove="Tests\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="UnitTest\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="UnitTest\obj\project.assets.json" />
-    <_ContentIncludedByDefault Remove="UnitTest\obj\UnitTest.csproj.nuget.dgspec.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="UnitTest\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="UnitTest\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="UnitTest\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="UnitTest\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="UnitTest\obj\project.assets.json" />
-    <_ContentIncludedByDefault Remove="UnitTest\obj\UnitTest.csproj.nuget.dgspec.json" />
+    <Content Remove="Tests\**" />
   </ItemGroup>
 
   <!-- https://github.com/MapsterMapper/Mapster/wiki/Mapster.Tool -->

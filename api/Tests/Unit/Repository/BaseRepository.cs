@@ -6,9 +6,9 @@ using api.Repositories.Common;
 using api.Repositories.Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
-using static UnitTest.Repository.Common.RepositoryUtilities;
+using static Tests.Unit.Repository.Common.RepositoryUtilities;
 
-namespace UnitTest.Repository;
+namespace Tests.Unit.Repository;
 
 public class BaseRepositoryTests
 {

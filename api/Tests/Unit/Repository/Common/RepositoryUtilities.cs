@@ -6,7 +6,7 @@ using api.Repositories.Common;
 using api.Repositories.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace UnitTest.Repository.Common;
+namespace Tests.Unit.Repository.Common;
 
 public static class RepositoryUtilities
 {

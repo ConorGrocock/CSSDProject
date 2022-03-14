@@ -5,9 +5,9 @@ using api.Repositories;
 using api.Repositories.Common.Exceptions;
 using api.Repositories.Common.Interfaces;
 using Xunit;
-using static UnitTest.Repository.Common.RepositoryUtilities;
+using static Tests.Unit.Repository.Common.RepositoryUtilities;
 
-namespace UnitTest.Repository;
+namespace Tests.Unit.Repository;
 
 public class AccountRepositoryTests
 {
