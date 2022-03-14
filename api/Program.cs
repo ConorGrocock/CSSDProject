@@ -1,15 +1,8 @@
 using api.Repositories.Common;
 using api.Repositories;
 using api.Services;
-using api.Services.Interfaces;
 using api.Repositories.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
-<<<<<<< HEAD
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-=======
 using api.Services.Common.Interfaces;
 using api.Models.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,29 +11,23 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Net.Http.Headers;
 using api.Models.Entities;
 using api.Models.Enums;
+using System.IdentityModel.Tokens.Jwt;
+using api.Services.Common;
 
 public class Program
 {
     public async static Task Main(string[] args)
     {
-        var corsPolicy = "development";
-        var LocalFrontend = "http://localhost:3001";
         var builder = WebApplication.CreateBuilder(args);
         var isDevelopment = builder.Environment.IsDevelopment();
 
         builder.Services.AddDbContextPool<NorTollDbContext>(opt =>
             opt.UseInMemoryDatabase("api")
         );
-        
-        builder.Services.AddCors(options => {
-            options.AddPolicy(corsPolicy, builder => {
-                builder.WithOrigins(LocalFrontend);
-                builder.AllowAnyMethod();
-                builder.AllowAnyHeader();
-            });
-        });
+
 
         builder.Services.AddControllers();
+        builder.Services.AddHttpContextAccessor();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(opt =>
         {
@@ -50,7 +37,7 @@ public class Program
                 Type = SecuritySchemeType.Http,
                 In = ParameterLocation.Header,
                 Name = HeaderNames.Authorization,
-                Scheme = "Bearer",
+                Scheme = "bearer",
                 BearerFormat = "JWT",
                 Description = "Provided by /auth/request and /auth/verify",
             });
@@ -82,7 +69,6 @@ public class Program
         }
 
         var app = builder.Build();
-        app.UseCors(corsPolicy);
 
         app.UseHttpsRedirection();
         app.UseAuthentication();
@@ -95,37 +81,79 @@ public class Program
 
             await SeedDatabase(app);
         }
->>>>>>> 97c959b (Data Seeding (#20))
 
-builder.Services.AddControllers();
-builder.Services.AddDbContextPool<NorTollDbContext>(opt => opt.UseInMemoryDatabase("api"));
+        app.Run();
+    }
+    private static void ConfigureRepositoryDependencies(WebApplicationBuilder builder)
+    {
+        builder.Services
+            .AddTransient<NorTollDbContext>()
+            .AddTransient<IAccountRepository, AccountRepository>()
+            .AddTransient<ISignInTokenRepository, SignInTokenRepository>()
+            .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>()
+            .AddTransient<IInvoiceRepository, InvoiceRepository>()
+            .AddTransient<IPaymentConfirmationTokenRepository, PaymentConfirmationTokenRepository>();
+    }
+    private static void ConfigureServiceDependencies(WebApplicationBuilder builder)
+    {
+        builder.Services
+            .AddTransient<IIdentityService, IdentityService>()
+            .AddTransient<IWeatherService, WeatherService>()
+            .AddTransient<IDateTimeService, DateTimeService>()
+            .AddTransient<IInvoiceService, InvoiceService>()
+            .AddTransient<IExternalPaymentProviderService, TestExternalPaymentProviderService>();
+    }
+    private static void ConfigureTestDependencies(WebApplicationBuilder builder)
+    {
+        builder.Logging.AddConsole();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+        builder.Services.AddTransient<IEmailService, TestEmailService>();
+    }
 
-// Setup dependencies
-builder.Services
-    .AddTransient<NorTollDbContext>()
-    .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>()
-    .AddTransient<IWeatherService, WeatherService>();
+    private static void ConfigureConfiguration(WebApplicationBuilder builder)
+    {
+        void ConfigureOptions<T>() where T : class
+            => builder.Services.AddSingleton(GetOptions<T>(builder));
 
-var app = builder.Build();
+        ConfigureOptions<AuthenticationOptions>();
+        ConfigureOptions<PaymentOptions>();
+    }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    private static T GetOptions<T>(WebApplicationBuilder builder) where T : class
+    {
+        return builder.Configuration
+            .GetSection(typeof(T).Name.Replace("Options", ""))
+            .Get<T>();
+    }
 
-app.UseHttpsRedirection();
+    private static void ConfigureAuthentication(WebApplicationBuilder builder, bool isDevelopment)
+    {
+        // prevent mapping away from NorTollClaimNames
+        JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-app.UseAuthorization();
+        builder.Services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt =>
+            {
+                var authenticationOptions = GetOptions<AuthenticationOptions>(builder);
 
-<<<<<<< HEAD
-app.MapControllers();
-=======
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = authenticationOptions.JwtIssuer,
+
+                    ValidateAudience = true,
+                    ValidAudience = authenticationOptions.JwtAudience,
+
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = authenticationOptions.JwtSecretKey,
+
+                    ValidateLifetime = true,
+
+                    NameClaimType = NorTollClaimNames.Name,
+                    RoleClaimType = NorTollClaimNames.Role
+                };
+
                 opt.RequireHttpsMetadata = !isDevelopment;
             });
     }
@@ -208,6 +236,4 @@ app.MapControllers();
         await dbContext.SaveChangesAsync();
     }
 }
->>>>>>> 97c959b (Data Seeding (#20))
 
-app.Run();
