@@ -8,6 +8,8 @@ import PaymentPage from './pages/Payment/PaymentPage';
 import ConfirmationPage from './pages/ConfirmationPage/ConfirmationPage';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(undefined);
+
   return (
     <div>
       <Router>
@@ -15,7 +17,32 @@ function App() {
           <a className="navbar-brand">⠀<i>NorToll</i></a>
 
           <div className="navbar-nav mr-auto">
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/home"} className="nav-link">
+                  Home
+                </Link>
+              </li>
+            )}
           </div>
+
+          {currentUser ? (
+            <div className="navbar-nav ms-auto">
+              <li className="nav-item">
+                <a href="/login" className="nav-link">
+                  Logout
+                </a>
+              </li>
+            </div>
+          ) : (
+            <div className="navbar-nav ms-auto">
+              <li className="nav-item">
+                <Link to={"/"} className="nav-link">
+                  Login
+                </Link>
+              </li>
+            </div>
+          )}
         </nav>
         <div className="container mt-3 ">
           <Routes>
