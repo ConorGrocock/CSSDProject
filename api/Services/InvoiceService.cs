@@ -69,7 +69,6 @@ public class InvoiceService : IInvoiceService
 
         var invoice = token.Invoice;
 
-        // FIXME id assignment
         invoice.PaymentConfirmationId = Guid.NewGuid();
         invoice.PaymentConfirmation = new PaymentConfirmation
         {

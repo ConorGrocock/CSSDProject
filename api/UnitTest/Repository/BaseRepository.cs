@@ -4,11 +4,11 @@ using api.Models.Entities;
 using api.Repositories;
 using api.Repositories.Common;
 using api.Repositories.Common.Exceptions;
-using api.Repositories.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
+using static UnitTest.Repository.Common.RepositoryUtilities;
 
-namespace UnitTest;
+namespace UnitTest.Repository;
 
 public class BaseRepositoryTests
 {
@@ -58,10 +58,7 @@ public class BaseRepositoryTests
         var entityId = Guid.NewGuid();
         var entity = new WeatherForecast { Id = entityId };
 
-        var (context, repository) = await GetRepository();
-
-        await context.Set<WeatherForecast>().AddAsync(entity);
-        await context.SaveChangesAsync();
+        var (_, repository) = await GetRepository();
 
         // Act, Assert
         await Assert.ThrowsAsync<EntityNotFoundException<WeatherForecast>>(() => repository.Get(entityId));
@@ -129,14 +126,9 @@ public class BaseRepositoryTests
         Assert.Empty(result);
     }
 
-    private async Task<(NorTollDbContext, IBaseRepository<WeatherForecast>)> GetRepository()
+    private static async Task<(NorTollDbContext, BaseRepository<WeatherForecast>)> GetRepository()
     {
-        var options = new DbContextOptionsBuilder<NorTollDbContext>().UseInMemoryDatabase("BaseRepositoryUnitTests").Options;
-
-        var context = new NorTollDbContext(options);
-
-        // clear previous testing datacontext
-        context.Set<WeatherForecast>().RemoveRange(await context.Set<WeatherForecast>().ToArrayAsync());
+        var context = await GetContext();
 
         return (context, new BaseRepository<WeatherForecast>(context));
     }
