@@ -52,9 +52,6 @@ public class AuthTests : BaseTest
         await _client.CreateAccount(account);
         await _client.RequestAuthentication(account.Email);
 
-        Console.WriteLine("what");
-        Console.WriteLine(emailService.EmailItems);
-
         var token = emailService.EmailItems
             .Single(x => x.To == account.Email)
             .Message[^36..]; // trailing GUID
