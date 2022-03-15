@@ -23,7 +23,7 @@ public class InvoiceController : NorTollControllerBase
     {
         var redirectUri = await _invoiceService.Pay(invoiceId);
 
-        return Ok(redirectUri.ToString());
+        return Redirect(redirectUri.ToString());
     }
 
     [HttpPost("confirmation/{token}")]

@@ -24,13 +24,15 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 
     public async Task<T> Get(Guid id, Func<IQueryable<T>, IQueryable<T>>? query = null)
     {
-        return await (query is null ? Set : query(Set))
+        return await ApplyQuery(query)
             .SingleOrDefaultAsync(x => x.Id == id)
             ?? throw new EntityNotFoundException<T>(nameof(BaseEntity.Id), id.ToString());
     }
 
     public async Task Insert(T t)
     {
+        t.Id = Guid.NewGuid();
+
         Set.Add(t);
 
         await _norTollDbContext.SaveChangesAsync();
