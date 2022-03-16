@@ -1,63 +1,62 @@
-using System;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using api.Controllers;
-using api.Services.Common.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using Tests.Integration.Actions;
 using Tests.Integration.Common;
-using Tests.Integration.Services;
 using Xunit;
+using System.Net;
+using Tests.Integration.Actions;
 using static Tests.Integration.Common.Utilities;
+using Microsoft.Extensions.DependencyInjection;
+using api.Services.Common.Interfaces;
+using Tests.Integration.Services;
+using System.Linq;
 
 namespace Tests.Integration;
 
-public class AuthTests : BaseTest
+public class AuthTests
 {
-    private string Endpoint { get; }
-
-    public AuthTests()
-    {
-        Endpoint = Endpoint<AuthController>();
-    }
-
     [Fact]
     public async Task CanRequestAuthentication()
     {
-        // Arrange
-        using var scope = _serviceProvider.CreateScope();
-        var emailService = (IntegrationEmailService)scope.ServiceProvider.GetRequiredService<IEmailService>();
+        var app = CreateApp();
+        var client = app.CreateClient();
 
+        // Arrange 
         var account = Faker.CreateAccountDto.Generate();
-        await _client.CreateAccount(account);
+        await client.CreateAccount(account);
 
         // Act
-        var response = await _client.RequestAuthentication(account.Email);
-        var emailItem = emailService.EmailItems.SingleOrDefault(x => x.To == account.Email);
+        var response = await client.RequestAuthentication(account.Email);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.NotNull(emailItem);
+
+        using var scope = app.Services.CreateAsyncScope();
+        var emailService = (IntegrationEmailService)scope.ServiceProvider.GetRequiredService<IEmailService>();
+
+        Assert.Single(emailService.EmailItems);
+        Assert.Single(emailService.EmailItems, x => x.To == account.Email);
     }
 
     [Fact]
     public async Task CanVerifyAuthentication()
     {
-        // Arrange
-        using var scope = _serviceProvider.CreateScope();
+        var app = CreateApp();
+        var client = app.CreateClient();
+
+        // Arrange 
+        var account = Faker.CreateAccountDto.Generate();
+        await client.CreateAccount(account);
+        await client.RequestAuthentication(account.Email);
+
+        using var scope = app.Services.CreateAsyncScope();
         var emailService = (IntegrationEmailService)scope.ServiceProvider.GetRequiredService<IEmailService>();
 
-        var account = Faker.CreateAccountDto.Generate();
-        await _client.CreateAccount(account);
-        await _client.RequestAuthentication(account.Email);
-
-        var token = emailService.EmailItems
+        var token = emailService
+            .EmailItems
             .Single(x => x.To == account.Email)
-            .Message[^36..]; // trailing GUID
+            .Message[^36..];
 
         // Act
-        var (response, tokenDto) = await _client.VerifyAuthentication(token);
+        var (response, tokenDto) = await client.VerifyAuthentication(token);
 
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);

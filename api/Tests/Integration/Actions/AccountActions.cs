@@ -2,7 +2,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using api.Controllers;
 using api.Models.Dtos;
-using Tests.Integration.Common;
 using static Tests.Integration.Common.Utilities;
 
 namespace Tests.Integration.Actions;

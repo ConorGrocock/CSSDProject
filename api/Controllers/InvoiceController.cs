@@ -1,3 +1,5 @@
+using api.Controllers.Common.Attributes;
+using api.Models.Enums;
 using api.Services.Common.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,12 +20,12 @@ public class InvoiceController : NorTollControllerBase
         return Ok(await _invoiceService.GetInvoices());
     }
 
-    [HttpGet("payment/{invoiceId}"), Authorize]
+    [HttpGet("payment/{invoiceId}"), Role(Role.Driver)]
     public async Task<ActionResult<string>> Payment([FromRoute] Guid invoiceId)
     {
         var redirectUri = await _invoiceService.Pay(invoiceId);
 
-        return Redirect(redirectUri.ToString());
+        return Ok(redirectUri.ToString());
     }
 
     [HttpPost("confirmation/{token}")]

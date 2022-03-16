@@ -22,9 +22,10 @@ public class Program
         var isDevelopment = builder.Environment.IsDevelopment();
 
         builder.Services.AddDbContextPool<NorTollDbContext>(opt =>
-            opt.UseInMemoryDatabase("api")
+            opt.UseInMemoryDatabase(
+                GetOptions<ConfigurationOptions>(builder).DatabaseName
+                ?? "NorTollDatabase")
         );
-
 
         builder.Services.AddControllers();
         builder.Services.AddHttpContextAccessor();
@@ -58,7 +59,7 @@ public class Program
             });
         });
 
-        ConfigureConfiguration(builder);
+        ConfigureOptions(builder);
         ConfigureRepositoryDependencies(builder);
         ConfigureServiceDependencies(builder);
         ConfigureAuthentication(builder, isDevelopment);
@@ -110,11 +111,18 @@ public class Program
         builder.Services.AddTransient<IEmailService, TestEmailService>();
     }
 
-    private static void ConfigureConfiguration(WebApplicationBuilder builder)
+    private static void ConfigureOptions(WebApplicationBuilder builder)
     {
         void ConfigureOptions<T>() where T : class
-            => builder.Services.AddSingleton(GetOptions<T>(builder));
+        {
+            var options = GetOptions<T>(builder);
 
+            if (options is null) { return; }
+
+            builder.Services.AddSingleton(options);
+        }
+
+        ConfigureOptions<ConfigurationOptions>();
         ConfigureOptions<AuthenticationOptions>();
         ConfigureOptions<PaymentOptions>();
     }
