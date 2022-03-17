@@ -1,10 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
-
+import PaginationComponent from "../../components/Pagination";
 
 const HomePage = ()  => {
     
   const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  //change this state to see more ore less requests per page
+  const [invoicesPerPage] = useState(4);
+
+  
 
   const onPay = () => {
         navigate("/payment");
@@ -17,9 +23,15 @@ const HomePage = ()  => {
         bill: string;
     }
 
-    const invoices : Invoice[]= [{id: 1, name: "Rob", bill: "bill"}, {id: 2, name: "Matt", bill: "bill1"}, {id: 3, name: "Frank", bill: "bill3"}];
+    const invoices : Invoice[]= [{id: 1, name: "Rob", bill: "bill"}, {id: 2, name: "Matt", bill: "bill1"}, {id: 3, name: "Frank", bill: "bill1"}, {id: 4, name: "Xulo", bill: "bill1"}, {id: 5, name: "TTT", bill: "bill1"}];
     
-    console.log(invoices)
+    const indexOfLastInvoice = currentPage * invoicesPerPage;
+    const indexOfFirstInvoice = indexOfLastInvoice - invoicesPerPage;
+    const currentInvoices = invoices.slice(indexOfFirstInvoice,indexOfLastInvoice);
+
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+    
     return(
         <div>
             <h1 className="display-5">Welcome, here are all your invoices</h1>
@@ -31,15 +43,7 @@ const HomePage = ()  => {
             </div>
             <hr></hr>
             <div>
-            <div className="d-flex justify-content-between">
-                <div><h4><b>Name</b></h4></div>    
-                <div><h4><b>RFID Tag</b></h4></div>    
-                <div><h4><b>Distance</b></h4></div>    
-                <div><h4><b>Bill</b></h4></div>   
-               
-            </div>
-             <hr></hr> 
-            {invoices.length > 0 ? (invoices.map((invoice) => (
+            {invoices.length > 0 ? (currentInvoices.map((invoice) => (
             <div key={invoice.id}>
               <div className="d-flex justify-content-between">
                 <div>
@@ -66,12 +70,16 @@ const HomePage = ()  => {
             </div>
           )
         )
-      ) : (
-        <b>
-          No invoices found.<hr></hr>
-        </b>
+      ): (
+        <b>No found invoices</b>
       )}
             </div>
+          <PaginationComponent
+            invoicesPerPage={invoicesPerPage}
+            totalInvoices={invoices.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
     );
 }
