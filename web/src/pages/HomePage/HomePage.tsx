@@ -18,13 +18,18 @@ const HomePage = ()  => {
         window.location.reload();
   }
 
+  const onReview = () => {
+        navigate("/home");
+        window.location.reload();
+  }
+
   interface User {
       id: number;
       email: string;
       role: string;
   }
 
-  const users : User[]=[{id: 1, email: "user@user.com", role: "driver"}]
+  const users : User[]=[{id: 1, email: "user@user.com", role: "toll"}]
 
   interface Invoice {
       id: number;
@@ -46,7 +51,7 @@ const HomePage = ()  => {
   return(
       <div>
 
-      {users[0].role === "toll" ? (
+      {users[0].role === "driver" ? (
         <div>
           <h1 className="display-5">Welcome, here are all your invoices</h1>
           <hr></hr>
@@ -129,7 +134,7 @@ const HomePage = ()  => {
                   </h5>
                 </div>
                 <div>
-                    <button className="btn btn-success" onClick={() => onPay()}>Pay</button>
+                    <button className="btn btn-info" onClick={() => onReview()}>Review</button>
                 </div>
               </div>
               <hr></hr>
