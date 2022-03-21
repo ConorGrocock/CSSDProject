@@ -29,7 +29,7 @@ const HomePage = ()  => {
       role: string;
   }
 
-  const users : User[]=[{id: 1, email: "user@user.com", role: "toll"}]
+  const users : User[]=[{id: 1, email: "user@user.com", role: "driver"}]
 
   interface Invoice {
       id: number;
@@ -57,6 +57,7 @@ const HomePage = ()  => {
           <hr></hr>
           <div>
             <div className="d-flex justify-content-between">
+              <h4><b>Invoice ID</b></h4>
               <h4><b>RFID Tag</b></h4>
               <h4><b>Distance</b></h4>
               <h4><b>Price</b></h4>
@@ -67,7 +68,11 @@ const HomePage = ()  => {
           {invoices.length > 0 ? (currentInvoices.map((invoice) => (
             <div key={invoice.id}>
               <div className="d-flex justify-content-between">
-
+                <div>
+                  <h5>
+                    #{invoice.id}⠀⠀⠀⠀⠀⠀
+                  </h5>
+                </div>
                 <div>
                   <h5>
                     {invoice.rfid}⠀⠀⠀⠀⠀⠀
