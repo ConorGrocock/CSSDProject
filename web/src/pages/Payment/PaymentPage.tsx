@@ -7,6 +7,11 @@ const PaymentPage = () => {
     const navigate = useNavigate();
 
     const handlePayment = () => {
+        navigate("/confirmation");
+        window.location.reload();
+    }
+
+    const handleCancel = () => {
         navigate("/home");
         window.location.reload();
     }
@@ -32,7 +37,7 @@ const PaymentPage = () => {
                         </div>
                     </Form.Group>
                     <div className="d-flex justify-content-between pt-4">
-                    <Button style={{width: "10em", height: "3em"}} variant="danger" type="submit"> 
+                    <Button style={{width: "10em", height: "3em"}} variant="danger" type="submit" onClick={handleCancel}> 
                         Cancel
                     </Button>
                     <Button style={{width: "10em", height: "3em"}} variant="success" type="submit"> 

@@ -34,7 +34,7 @@ const LoginPage = () => {
                         <Form.Label style={{fontSize: 20}}>E-mail address</Form.Label>
                         <Form.Control size="lg" type="email" name="email" placeholder="Enter email..." required/>
                         <Form.Label style={{fontSize: 20}}>Password</Form.Label>
-                        <Form.Control size="lg" type="password" name="email" placeholder="Enter password..." required/>
+                        <Form.Control size="lg" type="password" name="password" placeholder="Enter password..." required/>
                     </Form.Group>
                     <div className="d-flex justify-content-center">
                     <Button style={{width: 120, height: 40}} variant="primary" type="submit"> 

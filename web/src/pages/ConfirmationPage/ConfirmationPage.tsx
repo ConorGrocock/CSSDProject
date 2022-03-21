@@ -1,7 +1,15 @@
 import React from "react";
 import checkMark from "../../assets/checkmark.png"
+import {useNavigate} from "react-router-dom"
 
 const ConfirmationPage = () => {
+
+    const navigate = useNavigate();
+
+    const handleBack = () => {
+        navigate("/home");
+        window.location.reload();
+    }
 
     return(
         <div>
@@ -16,7 +24,7 @@ const ConfirmationPage = () => {
                 </div>
             </div>
             <div className="d-flex justify-content-between pt-5">
-                <button className="btn btn-info" style={{color: "white", width: "5em", height: "3em"}}>Back</button>
+                <button className="btn btn-info" style={{color: "white", width: "5em", height: "3em"}} onClick={handleBack}>Back</button>
                 <h4><i>The Nordic Department of Transport</i></h4>
             </div>
         </div>
