@@ -19,6 +19,9 @@ import {
   UseQueryResult,
   QueryKey
 } from 'react-query'
+import type {
+  Invoice
+} from '../api.schemas'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AsyncReturnType<
@@ -61,7 +64,7 @@ export const useGetApiInvoice = <TData = AsyncReturnType<typeof getApiInvoice>, 
 
 export const getApiInvoiceInvoiceId = (
     invoiceId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
+ ): Promise<AxiosResponse<Invoice>> => {
     return axios.get(
       `/api/Invoice/${invoiceId}`,options
     );

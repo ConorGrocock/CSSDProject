@@ -1,17 +1,16 @@
 import {useParams} from "react-router";
 import {useGetApiInvoiceInvoiceId} from "../../api/invoice/invoice";
-import {Invoice} from "../../api/api.schemas";
+import InvoicePage from "./InvoicePage";
 
-function InvoicePage() {
+function InvoicePageRouter() {
     const { invoiceId } = useParams();
     const { data: invoice } = useGetApiInvoiceInvoiceId(invoiceId ? invoiceId : '');
     if(!invoice) {
         return <div>Loading...</div>;
     }
 
-    return (
-        <InvoicePage invoice={invoice} />
-    )
+    return <InvoicePage invoice={invoice.data} />
+
 }
 
-export default InvoicePage;
+export default InvoicePageRouter;

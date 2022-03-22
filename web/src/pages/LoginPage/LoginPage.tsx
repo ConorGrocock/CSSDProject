@@ -4,8 +4,11 @@ import {Form, Button} from "react-bootstrap"
 import { usePostApiAuthRequest } from "../../api/auth/auth";
 import { PostApiAuthRequestParams } from "../../api/api.schemas";
 import logo from "../../assets/road.png"
+import {useTranslation} from "react-i18next";
 
 const LoginPage = () => {
+
+    const {t, i18n} = useTranslation("login");
 
     const navigate = useNavigate();
     
@@ -31,19 +34,19 @@ const LoginPage = () => {
             <div className="w-25">
                 <Form onSubmit={handleLogin}>
                     <Form.Group className="mb-3">
-                        <Form.Label style={{fontSize: 20}}>E-mail address</Form.Label>
-                        <Form.Control size="lg" type="email" name="email" placeholder="Enter email..." required/>
-                        <Form.Label style={{fontSize: 20}}>Password</Form.Label>
-                        <Form.Control size="lg" type="password" name="email" placeholder="Enter password..." required/>
+                        <Form.Label style={{fontSize: 20}}>{t("login:email_label")}</Form.Label>
+                        <Form.Control size="lg" type="email" name="email" placeholder={t("login:email_placeholder")} required/>
+                        <Form.Label style={{fontSize: 20}}>{t("login:password_label")}</Form.Label>
+                        <Form.Control size="lg" type="password" name="email" placeholder={t("login:password_placeholder")} required/>
                     </Form.Group>
                     <div className="d-flex justify-content-center">
-                    <Button style={{width: 120, height: 40}} variant="primary" type="submit"> 
-                        Log in
+                    <Button style={{width: 120, height: 40}} variant="primary" type="submit">
+                        {t('login:button')}
                     </Button>
                     </div>
                 </Form>
             </div>
-            <img src={logo} style={{position: "absolute", width: 300, height: 300, marginTop: 300}}></img>
+            <img src={logo} style={{position: "absolute", width: 300, height: 300, marginTop: 300}} />
         </div>
         
     )
