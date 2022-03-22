@@ -8,10 +8,12 @@ i18n
     .use(Locize)
     .use(LanguageDetector)
     .init({
-        lng: "en",
+        lng: "en-GB",
+        fallbackLng: "en",
         debug: true,
         saveMissing: true,
         saveMissingTo: "all",
+        defaultNS: "translations",
         interpolation: {
             escapeValue: false // react already safes from xss
         },
@@ -19,7 +21,7 @@ i18n
             projectId: "5f3297ed-d615-46c8-a6e8-3ad31d895b37",
             apiKey: "9589e16e-2120-45b7-966e-07c345f6fa26",
             private: true,
-            referenceLng: "en",
+            referenceLng: "en-GB",
             allowedAddOrUpdateHosts: ["localhost"]
         }
     });
