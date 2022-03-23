@@ -8,10 +8,10 @@ function BillPageRouter() {
 
     if(!isLoadingError && data) {
         const bill = data.data;
-        return <BillPage invoice={bill.invoice} amount={bill.amount} issuedAt={bill.issuedAt}/>
+        return <BillPage bill={bill}/>
     }
     else {
-        return <div>No bill selected</div>
+        return <div>{billId} Not found</div>
     }
 }
 

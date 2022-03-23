@@ -30,7 +30,14 @@ function AuthPage(props: AuthPageProps) {
     function onSuccess(data: any) {
         const {token} = data.data;
         const decoded = decodeJwt(token);
-        setUser(decoded as unknown as User)
+
+        const user: User = {
+            name: decoded.name as string,
+            role: decoded.role as string,
+            token: token as string
+        }
+
+        setUser(user)
         navigate("/home")
     }
 

@@ -9,13 +9,20 @@ namespace api.Services;
 
 public class BillService : IBillService
 {
+    private readonly IBillRepository _billRepository;
+
+    public BillService(IBillRepository billRepository)
+    {
+        _billRepository = billRepository;
+    }
+
     public Task<Bill[]> GetBillsFromInvoice(Guid invoiceId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Bill> GetBill(Guid billId)
+    public async Task<Bill> GetBill(Guid billId)
     {
-        throw new NotImplementedException();
+        return await _billRepository.Get(billId);
     }
 }

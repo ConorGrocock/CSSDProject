@@ -1,5 +1,5 @@
 import './App.css';
-import React, {Suspense, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Link, Route, Routes} from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "../src/pages/HomePage/HomePage"
@@ -13,12 +13,52 @@ import axios from "axios";
 import LanguagePicker from "./components/LanguagePicker/LanguagePicker";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import {User, UserProvider} from "./Contexts/UserContext";
+import {ReactQueryDevtools} from "react-query/devtools";
 
 axios.defaults.baseURL = "https://localhost:7107";
 
 function App() {
     const queryClient = new QueryClient()
     const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+        // Load user from local storage
+        if(user === null) {
+            const user = localStorage.getItem("user");
+            if(user !== null) {
+                setUser(JSON.parse(user));
+            }
+        }
+    }, [])
+
+    useEffect(() => {
+        if(user !== null) {
+            localStorage.setItem("user", JSON.stringify(user));
+        }
+    }, [user]);
+
+    useEffect(() => {
+        console.log(user)
+
+        if(user) {
+            const interceptorId = axios.interceptors.request.use((config) => {
+                return {
+                    ...config,
+                    headers: user.token
+                        ? {
+                            ...config.headers,
+                            Authorization: `Bearer ${user.token}`,
+                        }
+                        : config.headers,
+                };
+            });
+            return () => {
+                axios.interceptors.request.eject(interceptorId);
+            };
+        }
+        }, [,user]
+    )
+    ;
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -74,6 +114,7 @@ function App() {
 
                 </Suspense>
             </UserProvider>
+            <ReactQueryDevtools/>
         </QueryClientProvider>
     );
 }

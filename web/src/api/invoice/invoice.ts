@@ -21,7 +21,6 @@ import {
 } from 'react-query'
 import type {
   ViewInvoiceDto,
-  Invoice,
   Bill
 } from '../api.schemas'
 
@@ -66,7 +65,7 @@ export const useGetApiInvoice = <TData = AsyncReturnType<typeof getApiInvoice>, 
 
 export const getApiInvoiceInvoiceId = (
     invoiceId: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Invoice>> => {
+ ): Promise<AxiosResponse<ViewInvoiceDto>> => {
     return axios.get(
       `/api/Invoice/${invoiceId}`,options
     );

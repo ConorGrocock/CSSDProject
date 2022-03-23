@@ -35,6 +35,7 @@ public class Program
             options.AddPolicy(CorsPolicyName, builder =>
             {
                 builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
             });
         });
         builder.Services.AddControllers();
@@ -106,7 +107,8 @@ public class Program
             .AddTransient<ISignInTokenRepository, SignInTokenRepository>()
             .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>()
             .AddTransient<IInvoiceRepository, InvoiceRepository>()
-            .AddTransient<IPaymentConfirmationTokenRepository, PaymentConfirmationTokenRepository>();
+            .AddTransient<IPaymentConfirmationTokenRepository, PaymentConfirmationTokenRepository>()
+            .AddTransient<IBillRepository, BillRepository>();
     }
     private static void ConfigureServiceDependencies(WebApplicationBuilder builder)
     {

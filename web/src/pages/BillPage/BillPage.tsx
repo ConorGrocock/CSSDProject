@@ -1,19 +1,16 @@
-import {Invoice} from "../../api/api.schemas";
+import {Bill, Invoice} from "../../api/api.schemas";
 import moment from "moment";
 
 export interface BillPageProps {
-    amount?: number;
-    issuedAt?: string;
-    invoice?: Invoice;
+    bill: Bill;
 }
 
 function BillPage(props: BillPageProps) {
     return (
         <div>
-            <h1>BillPage</h1>
-            <p>Issued At: {moment(props.issuedAt).format("DD/MM/YYYY")}</p>
-            <p>Amount: £{props.amount}</p>
-            <p>Invoice: {props.invoice?.id}</p>
+            <h1 style={{ textAlign: "justify" }}>#{props.bill.id}</h1>
+            <p>Issued At: {moment(props.bill.issuedAt).format("DD/MM/YYYY")}</p>
+            <p>Amount: £{props.bill.amount}</p>
         </div>
     );
 }
