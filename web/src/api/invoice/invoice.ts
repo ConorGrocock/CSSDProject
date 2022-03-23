@@ -19,6 +19,9 @@ import {
   UseQueryResult,
   QueryKey
 } from 'react-query'
+import type {
+  Bill
+} from '../api.schemas'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AsyncReturnType<
@@ -60,7 +63,7 @@ export const useGetApiInvoice = <TData = AsyncReturnType<typeof getApiInvoice>, 
 }
 
 export const getApiInvoicePaymentInvoiceId = (
-    invoiceId: number, options?: AxiosRequestConfig
+    invoiceId: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<string>> => {
     return axios.get(
       `/api/Invoice/payment/${invoiceId}`,options
@@ -68,11 +71,11 @@ export const getApiInvoicePaymentInvoiceId = (
   }
 
 
-export const getGetApiInvoicePaymentInvoiceIdQueryKey = (invoiceId: number,) => [`/api/Invoice/payment/${invoiceId}`];
+export const getGetApiInvoicePaymentInvoiceIdQueryKey = (invoiceId: string,) => [`/api/Invoice/payment/${invoiceId}`];
 
     
 export const useGetApiInvoicePaymentInvoiceId = <TData = AsyncReturnType<typeof getApiInvoicePaymentInvoiceId>, TError = AxiosError<unknown>>(
- invoiceId: number, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getApiInvoicePaymentInvoiceId>, TError, TData>, axios?: AxiosRequestConfig}
+ invoiceId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getApiInvoicePaymentInvoiceId>, TError, TData>, axios?: AxiosRequestConfig}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
@@ -119,4 +122,36 @@ export const postApiInvoiceConfirmationToken = (
 
       return useMutation<AsyncReturnType<typeof postApiInvoiceConfirmationToken>, TError, {token: string}, TContext>(mutationFn, mutationOptions)
     }
+    export const getApiInvoiceInvoiceInvoiceId = (
+    invoiceId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<Bill>> => {
+    return axios.get(
+      `/api/Invoice/invoice/${invoiceId}`,options
+    );
+  }
+
+
+export const getGetApiInvoiceInvoiceInvoiceIdQueryKey = (invoiceId: string,) => [`/api/Invoice/invoice/${invoiceId}`];
+
     
+export const useGetApiInvoiceInvoiceInvoiceId = <TData = AsyncReturnType<typeof getApiInvoiceInvoiceInvoiceId>, TError = AxiosError<unknown>>(
+ invoiceId: string, options?: { query?:UseQueryOptions<AsyncReturnType<typeof getApiInvoiceInvoiceInvoiceId>, TError, TData>, axios?: AxiosRequestConfig}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const {query: queryOptions, axios: axiosOptions} = options || {}
+
+  const queryKey = queryOptions?.queryKey ?? getGetApiInvoiceInvoiceInvoiceIdQueryKey(invoiceId);
+
+  
+
+  const queryFn: QueryFunction<AsyncReturnType<typeof getApiInvoiceInvoiceInvoiceId>> = () => getApiInvoiceInvoiceInvoiceId(invoiceId, axiosOptions);
+
+  const query = useQuery<AsyncReturnType<typeof getApiInvoiceInvoiceInvoiceId>, TError, TData>(queryKey, queryFn, {enabled: !!(invoiceId), ...queryOptions})
+
+  return {
+    queryKey,
+    ...query
+  }
+}
+

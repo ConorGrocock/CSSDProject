@@ -1,3 +1,4 @@
+using api.Models.Entities;
 using api.Services.Common.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +8,11 @@ namespace api.Controllers;
 public class InvoiceController : NorTollControllerBase
 {
     private readonly IInvoiceService _invoiceService;
-    public InvoiceController(IInvoiceService invoiceService)
+    private readonly IBillService _billService;
+    public InvoiceController(IInvoiceService invoiceService, IBillService billService)
     {
         _invoiceService = invoiceService;
+        _billService = billService;
     }
 
     [HttpGet]
@@ -32,5 +35,11 @@ public class InvoiceController : NorTollControllerBase
         await _invoiceService.ConfirmPayment(token);
 
         return NoContent();
+    }
+    
+    [HttpGet("invoice/{invoiceId:Guid}")]
+    public async Task<ActionResult<Bill>> Get(Guid invoiceId)
+    {
+        return Ok(await _billService.GetBillsFromInvoice(invoiceId));
     }
 }
