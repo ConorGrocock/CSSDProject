@@ -27,12 +27,10 @@ public class AuthController : NorTollControllerBase
     }
 
     [HttpPost("verify")]
-    public async Task<ActionResult> SignIn([FromQuery] string token)
+    public async Task<TokenDto> SignIn([FromQuery] string token)
     {
         var authToken = await _identityService.SignIn(token);
 
-        var response = new TokenDto { Token = authToken };
-
-        return Ok(response);
+        return new TokenDto { Token = authToken }; ;
     }
 }

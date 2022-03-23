@@ -16,6 +16,25 @@ export interface WeatherForecast {
   summary?: string | null;
 }
 
+export interface ViewBillDto {
+  id?: string;
+  amount?: number;
+  issuedAt?: string;
+}
+
+export interface ViewInvoiceDto {
+  id?: string;
+  paymentReference?: string | null;
+  issuedAt?: string;
+  amount?: number;
+  account?: BasicAccountDto;
+  bills?: ViewBillDto[] | null;
+}
+
+export interface TokenDto {
+  token?: string | null;
+}
+
 export type Role = 0 | 1;
 
 
@@ -80,6 +99,12 @@ export interface Bill {
   issuedAt?: string;
   invoiceId?: string;
   invoice?: Invoice;
+}
+
+export interface BasicAccountDto {
+  id?: string;
+  name?: string | null;
+  email?: string | null;
 }
 
 export interface Address {

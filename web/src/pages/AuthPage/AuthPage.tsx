@@ -8,7 +8,9 @@ export interface AuthPageProps {
 
 function AuthPage(props: AuthPageProps) {
     const {token} = useParams();
-    const {mutate} = usePostApiAuthVerify();
+    const {mutate} = usePostApiAuthVerify({mutation: {
+        onSuccess
+        }});
 
     if(token === undefined) {
         return <div>Invalid token</div>
@@ -20,7 +22,14 @@ function AuthPage(props: AuthPageProps) {
             }})
     })
 
+    function onSuccess(data: any) {
+        const {token} = data;
+        const decoded = decodeJwt(token);
+        console.log(decoded);
+    }
+
     return (
+        <h1>Authenticating</h1>
     );
 }
 

@@ -20,6 +20,7 @@ import {
   QueryKey
 } from 'react-query'
 import type {
+  ViewInvoiceDto,
   Invoice,
   Bill
 } from '../api.schemas'
@@ -32,7 +33,7 @@ T extends (...args: any) => Promise<any>
 
 export const getApiInvoice = (
      options?: AxiosRequestConfig
- ): Promise<AxiosResponse<Invoice[]>> => {
+ ): Promise<AxiosResponse<ViewInvoiceDto[]>> => {
     return axios.get(
       `/api/Invoice`,options
     );

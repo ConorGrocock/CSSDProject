@@ -16,6 +16,7 @@ import {
 } from 'react-query'
 import type {
   PostApiAuthRequestParams,
+  TokenDto,
   PostApiAuthVerifyParams
 } from '../api.schemas'
 
@@ -56,7 +57,7 @@ export const postApiAuthRequest = (
     }
     export const postApiAuthVerify = (
     params?: PostApiAuthVerifyParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
+ ): Promise<AxiosResponse<TokenDto>> => {
     return axios.post(
       `/api/Auth/verify`,undefined,{
         params,
