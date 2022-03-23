@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import PaymentPage from './pages/Payment/PaymentPage';
 import ConfirmationPage from './pages/ConfirmationPage/ConfirmationPage';
 import InvoicePageRouter from "./pages/InvoicePage/InvoicePageRouter";
+import BillPageRouter from "./pages/BillPage/BillPageRouter";
 import {QueryClient, QueryClientProvider} from "react-query";
 import axios from "axios";
 import LanguagePicker from "./components/LanguagePicker/LanguagePicker";
@@ -60,6 +61,7 @@ function App() {
                                 <Route path="/payment" element={<PaymentPage/>}/>
                                 <Route path="/confirmation" element={<ConfirmationPage/>}/>
                                 <Route path="/invoice/:invoiceId" element={<InvoicePageRouter/>}/>
+                                <Route path="/bill/:billId" element={<BillPageRouter />} />
                                 <Route path="/" element={<LoginPage/>}/>
                             </Routes>
                         </div>
