@@ -16,6 +16,8 @@ using api.Services.Common;
 
 public class Program
 {
+    static string CorsPolicyName = "corsPolicy";
+
     public async static Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +27,13 @@ public class Program
             opt.UseInMemoryDatabase("api")
         );
 
-
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(CorsPolicyName, builder =>
+            {
+                builder.AllowAnyOrigin();
+            });
+        });
         builder.Services.AddControllers();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddEndpointsApiExplorer();
@@ -71,6 +79,9 @@ public class Program
         var app = builder.Build();
 
         app.UseHttpsRedirection();
+
+        app.UseCors(CorsPolicyName);
+        
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
@@ -234,4 +245,3 @@ public class Program
         await dbContext.SaveChangesAsync();
     }
 }
-

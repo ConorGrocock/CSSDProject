@@ -1,3 +1,4 @@
+using api.Models.Entities;
 using api.Services.Common.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,12 @@ public class InvoiceController : NorTollControllerBase
     public async Task<ActionResult> Get()
     {
         return Ok(await _invoiceService.GetInvoices());
+    }
+
+    [HttpGet("{invoiceId}")]
+    public async Task<ActionResult<Invoice>> GetId([FromRoute] Guid invoiceId)
+    {
+        return Ok(await _invoiceService.GetInvoice(invoiceId));
     }
 
     [HttpGet("payment/{invoiceId}"), Authorize]
