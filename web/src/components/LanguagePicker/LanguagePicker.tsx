@@ -1,5 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
+import ReactCountryFlag from "react-country-flag"
 
 export interface LanguagePickerProps {
 }
@@ -24,11 +25,13 @@ function LanguagePicker(props: LanguagePickerProps) {
         borderRadius: '5px',
         boxShadow: '0px 0px 5px #ccc',
     }}>
-        {Object.keys(lngs).map((lng: string) => (
-            <button key={lng} style={{ fontWeight: i18n.language === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
-                {lngs[lng].nativeName}
-            </button>
-        ))}
+        <select defaultValue={i18n.language} onChange={(e) => i18n.changeLanguage(e.target.value)}>
+            {Object.keys(lngs).map((lng: string) => (
+                <option key={lng} value={lng}>
+                    {lngs[lng].nativeName}
+                </option>
+            ))}
+        </select>
     </div>
 }
 
