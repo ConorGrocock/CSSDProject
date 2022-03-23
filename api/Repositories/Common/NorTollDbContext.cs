@@ -42,14 +42,15 @@ public class NorTollDbContext : DbContext
             .HasForeignKey<SignInToken>(x => x.AccountId);
 
         builder.Entity<Bill>()
-            .HasOne(x => x.Invoice)
-            .WithOne()
-            .HasForeignKey<Bill>(x => x.InvoiceId);
+           .HasOne<Invoice>(x => x.Invoice)
+           .WithMany(x => x.Bills)
+           .HasForeignKey(x => x.InvoiceId)
+           .IsRequired();
 
         builder.Entity<Invoice>()
-            .HasOne(x => x.PostalAddress)
-            .WithOne()
-            .HasForeignKey<Invoice>(x => x.PostalAddressId)
+            .HasOne<Address>(x => x.PostalAddress)
+            .WithMany()
+            .HasForeignKey(x => x.PostalAddressId)
             .IsRequired();
 
         builder.Entity<Invoice>()

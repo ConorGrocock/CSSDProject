@@ -24,10 +24,11 @@ public class Program
         var isDevelopment = builder.Environment.IsDevelopment();
 
         builder.Services.AddDbContextPool<NorTollDbContext>(opt =>
-            opt.UseInMemoryDatabase(
-                GetOptions<ConfigurationOptions>(builder).DatabaseName
-                ?? "NorTollDatabase")
-        );
+        {
+            var configuration = GetOptions<ConfigurationOptions>(builder);
+
+            opt.UseInMemoryDatabase(configuration.DatabaseName);
+        });
 
         builder.Services.AddCors(options =>
         {
@@ -185,6 +186,12 @@ public class Program
         var dbContext = scope.ServiceProvider.GetRequiredService<NorTollDbContext>();
         var dateTimeService = scope.ServiceProvider.GetRequiredService<IDateTimeService>();
 
+        if (await dbContext.Addresses.AnyAsync())
+        {
+            // exit if seeded already
+            return;
+        }
+
         var driverAddress = new Address
         {
             Id = SeedData.DriverAddressId,
@@ -247,15 +254,11 @@ public class Program
             tollOperatorAddress,
             driver,
             tollOperator,
-            // createInvoice(new[] { 13, 20, 5 }),
-            // createInvoice(new[] { 3 }),
-            createInvoice(SeedData.Invoice1Id, new[] { 34, 27 }));
+            createInvoice(SeedData.Invoice1Id, new[] { 13, 20, 5 }),
+            createInvoice(SeedData.Invoice2Id, new[] { 3 }),
+            createInvoice(SeedData.Invoice3Id, new[] { 34, 27 }));
 
-        try
-        {
-            await dbContext.SaveChangesAsync();
-        }
-        catch { } // discard failed seed
+        await dbContext.SaveChangesAsync();
     }
 }
 
@@ -268,5 +271,7 @@ public static class SeedData
     public static Guid TollOperatorId { get; } = Guid.NewGuid();
     public static string TollOperatorEmail { get; } = "tollOperator@email.com";
     public static Guid Invoice1Id { get; } = Guid.NewGuid();
+    public static Guid Invoice2Id { get; } = Guid.NewGuid();
+    public static Guid Invoice3Id { get; } = Guid.NewGuid();
 }
 
