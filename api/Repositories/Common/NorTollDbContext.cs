@@ -53,6 +53,8 @@ public class NorTollDbContext : DbContext
             .HasForeignKey(x => x.PostalAddressId)
             .IsRequired();
 
+        builder.Entity<Invoice>().Ignore(x => x.Amount);
+
         builder.Entity<Invoice>()
             .HasOne<Account>(x => x.Account)
             .WithMany(x => x.Invoices)

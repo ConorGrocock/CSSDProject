@@ -11,7 +11,17 @@ public class NorTollMappingConfiguration : ICodeGenerationRegister
         config.AdaptFrom(nameof(CreateAccountDto))
             .ForType<Account>();
 
-        config.GenerateMapper("[name]Mapper")
+        config.AdaptTo(nameof(BasicAccountDto))
             .ForType<Account>();
+
+        config.AdaptTo(nameof(ViewBillDto))
+            .ForType<Bill>();
+
+        config.AdaptTo(nameof(ViewInvoiceDto))
+            .ForType<Invoice>();
+
+        config.GenerateMapper("[name]Mapper")
+            .ForType<Account>()
+            .ForType<Invoice>();
     }
 }

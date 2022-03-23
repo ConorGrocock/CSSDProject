@@ -39,6 +39,29 @@ namespace api.Models.Dtos
             return result;
             
         }
+        public static BasicAccountDto AdaptToBasicDto(this Account p6)
+        {
+            return p6 == null ? null : new BasicAccountDto()
+            {
+                Name = p6.Name,
+                Email = p6.Email,
+                Id = p6.Id
+            };
+        }
+        public static BasicAccountDto AdaptTo(this Account p7, BasicAccountDto p8)
+        {
+            if (p7 == null)
+            {
+                return null;
+            }
+            BasicAccountDto result = p8 ?? new BasicAccountDto();
+            
+            result.Name = p7.Name;
+            result.Email = p7.Email;
+            result.Id = p7.Id;
+            return result;
+            
+        }
         
         private static Address funcMain1(CreateAddressDto p4, Address p5)
         {
