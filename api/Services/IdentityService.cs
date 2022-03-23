@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using FluentValidation;
 using api.Services.Common;
+using api.Models.Enums;
 
 namespace api.Services;
 public class IdentityService : IIdentityService
@@ -106,12 +107,17 @@ public class IdentityService : IIdentityService
 
     public Guid GetCurrentAccountId()
     {
-        if (!Guid.TryParse(
-            _httpContextAccessor.HttpContext?.User?.FindFirstValue(NorTollClaimNames.Name), out var id))
-        {
-            throw new AuthenticationException("No user is signed in");
-        }
+        return Guid.Parse(EnsureUser().FindFirstValue(NorTollClaimNames.Name));
+    }
 
-        return id;
+    public bool IsInRole(Role role)
+    {
+        return EnsureUser().IsInRole(role.ToString());
+    }
+
+    private ClaimsPrincipal EnsureUser()
+    {
+        return _httpContextAccessor.HttpContext?.User
+            ?? throw new AuthenticationException("No user is signed in");
     }
 }

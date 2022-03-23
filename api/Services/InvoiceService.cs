@@ -35,12 +35,18 @@ public class InvoiceService : IInvoiceService
 
     public async Task<ViewInvoiceDto[]> GetInvoices()
     {
-        return await (await _invoiceRepository
-            .GetAll(x => x
-                .Include(x => x.Account)
-                .Include(x => x.Bills)))
-            .Select(x => x.AdaptToViewDto())
-            .ToArrayAsync();
+        var invoices = await _invoiceRepository.GetAll(x => x
+            .Include(x => x.Account)
+            .Include(x => x.Bills));
+
+        var currentUser = await _accountRepository.Get(_identityService.GetCurrentAccountId());
+
+        if (currentUser.Role != Role.TollOperator)
+        {
+            invoices = invoices.Where(x => x.AccountId == currentUser.Id);
+        }
+
+        return await invoices.Select(x => x.AdaptToViewDto()).ToArrayAsync();
     }
 
     public async Task<Uri> Pay(Guid invoiceId)
@@ -87,8 +93,24 @@ public class InvoiceService : IInvoiceService
         await _invoiceRepository.Update(invoice);
     }
 
-    public async Task<Invoice> GetInvoice(Guid invoiceId)
+    public async Task<ViewInvoiceDto> GetInvoice(Guid invoiceId)
     {
-        return await _invoiceRepository.Get(invoiceId);
+        var invoice = await _invoiceRepository.Get(invoiceId, x => x
+            .Include(x => x.Account)
+            .Include(x => x.Bills));
+
+        var currentUser = await _accountRepository.Get(_identityService.GetCurrentAccountId());
+
+        if (currentUser.Role == Role.TollOperator)
+        {
+            return invoice.AdaptToViewDto();
+        }
+
+        if (currentUser.Id != invoice.AccountId)
+        {
+            throw new AuthorizationException("Cannot view another user's Invoice");
+        }
+
+        return invoice.AdaptToViewDto();
     }
 }
