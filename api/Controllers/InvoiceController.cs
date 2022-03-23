@@ -21,7 +21,7 @@ public class InvoiceController : NorTollControllerBase
     }
 
     [HttpGet("{invoiceId}")]
-    public async Task<Invoice> GetId([FromRoute] Guid invoiceId)
+    public async Task<ViewInvoiceDto> GetId([FromRoute] Guid invoiceId)
     {
         return await _invoiceService.GetInvoice(invoiceId);
     }
