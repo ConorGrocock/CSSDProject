@@ -32,7 +32,7 @@ T extends (...args: any) => Promise<any>
 
 export const getApiInvoice = (
      options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
+ ): Promise<AxiosResponse<Invoice[]>> => {
     return axios.get(
       `/api/Invoice`,options
     );

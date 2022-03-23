@@ -34,7 +34,9 @@ public class InvoiceService : IInvoiceService
 
     public async Task<Invoice[]> GetInvoices()
     {
-        return (await _invoiceRepository.GetAll()).ToArray();
+        return (await _invoiceRepository.GetAll(invoices => 
+            invoices.Include(i => i.Account)
+                .Include(i => i.Bills))).ToArray();
     }
 
     public async Task<Uri> Pay(Guid invoiceId)

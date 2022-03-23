@@ -16,7 +16,7 @@ public class InvoiceController : NorTollControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> Get()
+    public async Task<ActionResult<Invoice[]>> Get()
     {
         return Ok(await _invoiceService.GetInvoices());
     }

@@ -11,6 +11,7 @@ import BillPageRouter from "./pages/BillPage/BillPageRouter";
 import {QueryClient, QueryClientProvider} from "react-query";
 import axios from "axios";
 import LanguagePicker from "./components/LanguagePicker/LanguagePicker";
+import AuthPage from "./pages/AuthPage/AuthPage";
 
 axios.defaults.baseURL = "https://localhost:7107";
 
@@ -62,6 +63,7 @@ function App() {
                                 <Route path="/confirmation" element={<ConfirmationPage/>}/>
                                 <Route path="/invoice/:invoiceId" element={<InvoicePageRouter/>}/>
                                 <Route path="/bill/:billId" element={<BillPageRouter />} />
+                                <Route path="/auth/:token" element={<AuthPage />} />
                                 <Route path="/" element={<LoginPage/>}/>
                             </Routes>
                         </div>

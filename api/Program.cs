@@ -79,7 +79,7 @@ public class Program
         }
 
         var app = builder.Build();
-
+        
         app.UseHttpsRedirection();
 
         app.UseCors(CorsPolicyName);
@@ -114,7 +114,8 @@ public class Program
             .AddTransient<IWeatherService, WeatherService>()
             .AddTransient<IDateTimeService, DateTimeService>()
             .AddTransient<IInvoiceService, InvoiceService>()
-            .AddTransient<IExternalPaymentProviderService, TestExternalPaymentProviderService>();
+            .AddTransient<IExternalPaymentProviderService, TestExternalPaymentProviderService>()
+            .AddTransient<IBillService, BillService>();
     }
     private static void ConfigureTestDependencies(WebApplicationBuilder builder)
     {
@@ -269,4 +270,3 @@ public static class SeedData
     public static string TollOperatorEmail { get; } = "tollOperator@email.com";
     public static Guid Invoice1Id { get; } = Guid.NewGuid();
 }
-

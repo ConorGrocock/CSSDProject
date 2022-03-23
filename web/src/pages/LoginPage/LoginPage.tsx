@@ -36,8 +36,6 @@ const LoginPage = () => {
                     <Form.Group className="mb-3">
                         <Form.Label style={{fontSize: 20}}>{t("login:email_label")}</Form.Label>
                         <Form.Control size="lg" type="email" name="email" placeholder={t("login:email_placeholder")} required/>
-                        <Form.Label style={{fontSize: 20}}>{t("login:password_label")}</Form.Label>
-                        <Form.Control size="lg" type="password" name="email" placeholder={t("login:password_placeholder")} required/>
                     </Form.Group>
                     <div className="d-flex justify-content-center">
                     <Button style={{width: 120, height: 40}} variant="primary" type="submit">
