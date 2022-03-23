@@ -80,4 +80,9 @@ public class InvoiceService : IInvoiceService
 
         await _invoiceRepository.Update(invoice);
     }
+
+    public async Task<Invoice> GetInvoice(Guid invoiceId)
+    {
+        return await _invoiceRepository.Get(invoiceId);
+    }
 }

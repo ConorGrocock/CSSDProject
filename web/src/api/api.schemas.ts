@@ -9,11 +9,52 @@ export type PostApiAuthVerifyParams = { token?: string };
 export type PostApiAuthRequestParams = { email?: string };
 
 export interface WeatherForecast {
-  id?: number;
+  id?: string;
   date?: string;
   temperatureC?: number;
   readonly temperatureF?: number;
   summary?: string | null;
+}
+
+export type Role = 0 | 1;
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const Role = {
+  NUMBER_0: 0 as Role,
+  NUMBER_1: 1 as Role,
+};
+
+export type PaymentMethod = 0 | 1;
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const PaymentMethod = {
+  NUMBER_0: 0 as PaymentMethod,
+  NUMBER_1: 1 as PaymentMethod,
+};
+
+export interface Invoice {
+  id?: string;
+  paymentReference?: string | null;
+  issuedAt?: string;
+  readonly amount?: number;
+  accountId?: string;
+  account?: Account;
+  postalAddressId?: string;
+  postalAddress?: Address;
+  paymentConfirmationId?: string | null;
+  paymentConfirmation?: PaymentConfirmation;
+  readonly bills?: Bill[] | null;
+}
+
+export interface PaymentConfirmation {
+  id?: string;
+  identifier?: string | null;
+  paidAt?: string;
+  method?: PaymentMethod;
+  invoiceId?: string;
+  invoice?: Invoice;
 }
 
 export interface CreateAddressDto {
@@ -31,5 +72,35 @@ export interface CreateAccountDto {
   email?: string | null;
   immediatePayment?: boolean;
   postalAddress?: CreateAddressDto;
+}
+
+export interface Bill {
+  id?: string;
+  amount?: number;
+  issuedAt?: string;
+  invoiceId?: string;
+  invoice?: Invoice;
+}
+
+export interface Address {
+  id?: string;
+  line1?: string | null;
+  line2?: string | null;
+  line3?: string | null;
+  city?: string | null;
+  state?: string | null;
+  country?: string | null;
+  postcode?: string | null;
+}
+
+export interface Account {
+  id?: string;
+  name?: string | null;
+  email?: string | null;
+  immediatePayment?: boolean;
+  role?: Role;
+  postalAddressId?: string;
+  postalAddress?: Address;
+  readonly invoices?: Invoice[] | null;
 }
 
