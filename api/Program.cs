@@ -24,7 +24,9 @@ public class Program
         var isDevelopment = builder.Environment.IsDevelopment();
 
         builder.Services.AddDbContextPool<NorTollDbContext>(opt =>
-            opt.UseInMemoryDatabase("api")
+            opt.UseInMemoryDatabase(
+                GetOptions<ConfigurationOptions>(builder).DatabaseName
+                ?? "NorTollDatabase")
         );
 
         builder.Services.AddCors(options =>
@@ -66,7 +68,7 @@ public class Program
             });
         });
 
-        ConfigureConfiguration(builder);
+        ConfigureOptions(builder);
         ConfigureRepositoryDependencies(builder);
         ConfigureServiceDependencies(builder);
         ConfigureAuthentication(builder, isDevelopment);
@@ -81,7 +83,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseCors(CorsPolicyName);
-        
+
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
@@ -121,11 +123,18 @@ public class Program
         builder.Services.AddTransient<IEmailService, TestEmailService>();
     }
 
-    private static void ConfigureConfiguration(WebApplicationBuilder builder)
+    private static void ConfigureOptions(WebApplicationBuilder builder)
     {
         void ConfigureOptions<T>() where T : class
-            => builder.Services.AddSingleton(GetOptions<T>(builder));
+        {
+            var options = GetOptions<T>(builder);
 
+            if (options is null) { return; }
+
+            builder.Services.AddSingleton(options);
+        }
+
+        ConfigureOptions<ConfigurationOptions>();
         ConfigureOptions<AuthenticationOptions>();
         ConfigureOptions<PaymentOptions>();
     }
@@ -178,7 +187,7 @@ public class Program
 
         var driverAddress = new Address
         {
-            Id = Guid.NewGuid(),
+            Id = SeedData.DriverAddressId,
             Line1 = "4 Grass Lane",
             City = "Sheffield",
             Country = "England",
@@ -187,16 +196,16 @@ public class Program
 
         var driver = new Account
         {
-            Id = Guid.NewGuid(),
+            Id = SeedData.DriverId,
             Name = "john the driver",
-            Email = "john@email.com",
+            Email = SeedData.DriverEmail,
             Role = Role.Driver,
             PostalAddressId = driverAddress.Id
         };
 
         var tollOperatorAddress = new Address
         {
-            Id = Guid.NewGuid(),
+            Id = SeedData.TollOperatorAddressId,
             Line1 = "12 High Lane",
             City = "Buxton",
             Country = "England",
@@ -205,18 +214,18 @@ public class Program
 
         var tollOperator = new Account
         {
-            Id = Guid.NewGuid(),
+            Id = SeedData.TollOperatorId,
             Name = "steve the toll operator",
-            Email = "steve@email.com",
+            Email = SeedData.TollOperatorEmail,
             Role = Role.TollOperator,
             PostalAddressId = tollOperatorAddress.Id
         };
 
-        var createInvoice = (int[] billAmounts) =>
+        var createInvoice = (Guid id, int[] billAmounts) =>
         {
             var invoice = new Invoice
             {
-                Id = Guid.NewGuid(),
+                Id = id,
                 AccountId = driver.Id,
                 PostalAddressId = driverAddress.Id,
                 PaymentReference = Guid.NewGuid().ToString(),
@@ -238,10 +247,26 @@ public class Program
             tollOperatorAddress,
             driver,
             tollOperator,
-            createInvoice(new[] { 13, 20, 5 }),
-            createInvoice(new[] { 3 }),
-            createInvoice(new[] { 34, 27 }));
+            // createInvoice(new[] { 13, 20, 5 }),
+            // createInvoice(new[] { 3 }),
+            createInvoice(SeedData.Invoice1Id, new[] { 34, 27 }));
 
-        await dbContext.SaveChangesAsync();
+        try
+        {
+            await dbContext.SaveChangesAsync();
+        }
+        catch { } // discard failed seed
     }
 }
+
+public static class SeedData
+{
+    public static Guid DriverAddressId { get; } = Guid.NewGuid();
+    public static Guid DriverId { get; } = Guid.NewGuid();
+    public static string DriverEmail { get; } = "driver@email.com";
+    public static Guid TollOperatorAddressId { get; } = Guid.NewGuid();
+    public static Guid TollOperatorId { get; } = Guid.NewGuid();
+    public static string TollOperatorEmail { get; } = "tollOperator@email.com";
+    public static Guid Invoice1Id { get; } = Guid.NewGuid();
+}
+
