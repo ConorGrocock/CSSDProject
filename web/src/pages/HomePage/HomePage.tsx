@@ -39,7 +39,7 @@ const HomePage = () => {
                                     {invoice.account?.name}
                                 </h4>
                                 <h4>
-                                    {invoice.paymentReference !== undefined ? "Paid" : "Unpaid"}
+                                    {invoice.amount}
                                 </h4>
                                 <div>
                                     {invoice.bills?.length}

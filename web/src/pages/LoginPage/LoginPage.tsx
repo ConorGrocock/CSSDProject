@@ -9,12 +9,12 @@ import {useTranslation} from "react-i18next";
 const LoginPage = () => {
 
     const {t, i18n} = useTranslation("login");
+    const [loggingIn, setLoggingIn] = useState(false);
 
     const navigate = useNavigate();
     
     const onSuccess = () => {
-        navigate("/home");
-        window.location.reload();
+        setLoggingIn(true)
     }
 
     const {mutate} = usePostApiAuthRequest({mutation:{onSuccess}});
@@ -32,6 +32,7 @@ const LoginPage = () => {
     return(
         <div className="d-flex justify-content-center">
             <div className="w-25">
+                { loggingIn && <div>{t("login:login_message")}</div>}
                 <Form onSubmit={handleLogin}>
                     <Form.Group className="mb-3">
                         <Form.Label style={{fontSize: 20}}>{t("login:email_label")}</Form.Label>
