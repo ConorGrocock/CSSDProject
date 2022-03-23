@@ -1,3 +1,4 @@
+using api.Models.Dtos;
 using api.Models.Entities;
 using api.Services.Common.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -14,23 +15,23 @@ public class InvoiceController : NorTollControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult> Get()
+    public async Task<ViewInvoiceDto[]> Get()
     {
-        return Ok(await _invoiceService.GetInvoices());
+        return await _invoiceService.GetInvoices();
     }
 
     [HttpGet("{invoiceId}")]
-    public async Task<ActionResult<Invoice>> GetId([FromRoute] Guid invoiceId)
+    public async Task<Invoice> GetId([FromRoute] Guid invoiceId)
     {
-        return Ok(await _invoiceService.GetInvoice(invoiceId));
+        return await _invoiceService.GetInvoice(invoiceId);
     }
 
     [HttpGet("payment/{invoiceId}"), Authorize]
-    public async Task<ActionResult<string>> Payment([FromRoute] Guid invoiceId)
+    public async Task<string> Payment([FromRoute] Guid invoiceId)
     {
         var redirectUri = await _invoiceService.Pay(invoiceId);
 
-        return Ok(redirectUri.ToString());
+        return redirectUri.ToString();
     }
 
     [HttpPost("confirmation/{token}")]

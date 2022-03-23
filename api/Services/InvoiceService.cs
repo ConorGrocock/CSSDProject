@@ -1,5 +1,6 @@
 using api.Models.Entities;
 using api.Models.Enums;
+using api.Models.Dtos;
 using api.Models.Exceptions;
 using api.Repositories.Common.Interfaces;
 using api.Services.Common.Interfaces;
@@ -32,9 +33,14 @@ public class InvoiceService : IInvoiceService
         _paymentConfirmationTokenRepository = paymentConfirmationTokenRepository;
     }
 
-    public async Task<Invoice[]> GetInvoices()
+    public async Task<ViewInvoiceDto[]> GetInvoices()
     {
-        return (await _invoiceRepository.GetAll()).ToArray();
+        return await (await _invoiceRepository
+            .GetAll(x => x
+                .Include(x => x.Account)
+                .Include(x => x.Bills)))
+            .Select(x => x.AdaptToViewDto())
+            .ToArrayAsync();
     }
 
     public async Task<Uri> Pay(Guid invoiceId)

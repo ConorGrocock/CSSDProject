@@ -29,8 +29,6 @@ public static class Utilities
             .WithWebHostBuilder(builder =>
             {
                 // unique database per-test
-                // prevent data sharing 
-                // prevent concurrency issues with in-memory db
                 builder.ConfigureAppConfiguration((_, builder) =>
                 {
                     var configurationSource = new MemoryConfigurationSource();
