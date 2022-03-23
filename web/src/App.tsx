@@ -49,6 +49,7 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/confirmation" element={<ConfirmationPage />} />
+            <Route path="/bill/:billId" element={<ConfirmationPage />} />
             <Route path="/" element={<LoginPage />} />
           </Routes>
         </div>
