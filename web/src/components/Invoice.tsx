@@ -1,5 +1,3 @@
-import { ReactElement, ReactNode } from "react";
-
 const Invoice = (invoiceList: object[]) => {
 
   console.log(invoiceList)

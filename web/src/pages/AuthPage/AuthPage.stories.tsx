@@ -12,8 +12,8 @@ export default {
     }
 } as ComponentMeta<typeof AuthPage>;
 
-const Template: ComponentStory<typeof AuthPage> = ({...args}) => {
-    return <AuthPage {...args} />;
+const Template: ComponentStory<any> = () => {
+    return <AuthPage />;
 };
 
 export const Default = Template.bind({});

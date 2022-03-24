@@ -10,7 +10,6 @@ i18n
     .init({
         lng: "en-GB",
         fallbackLng: "en",
-        debug: true,
         saveMissing: true,
         saveMissingTo: "all",
         defaultNS: "translations",

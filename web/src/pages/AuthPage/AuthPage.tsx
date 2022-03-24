@@ -1,29 +1,30 @@
 import {usePostApiAuthVerify} from "../../api/auth/auth";
 import {useParams} from "react-router";
-import {decodeJwt, jwtDecrypt} from "jose";
+import {decodeJwt} from "jose";
 import {useContext, useEffect} from "react";
-import {User, UserConsumer, UserContext} from "../../Contexts/UserContext";
+import {User, UserContext} from "../../Contexts/UserContext";
 import {useNavigate} from "react-router-dom";
 
-export interface AuthPageProps {
-}
-
-function AuthPage(props: AuthPageProps) {
+function AuthPage() {
     const {token} = useParams();
     const navigate = useNavigate()
     const {setUser} = useContext(UserContext)
-    const {mutate} = usePostApiAuthVerify({mutation: {
-        onSuccess
-        }});
+    const {mutate} = usePostApiAuthVerify({
+        mutation: {
+            onSuccess
+        }
+    });
 
 
     useEffect(() => {
-        mutate({params: {
+        mutate({
+            params: {
                 token
-            }})
-    }, [token]);
+            }
+        })
+    }, [token, mutate])
 
-    if(token === undefined) {
+    if (token === undefined) {
         return <div>Invalid token</div>
     }
 
