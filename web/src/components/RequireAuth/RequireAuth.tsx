@@ -13,7 +13,7 @@ function RequireAuth(props: RequireAuthProps): React.ReactElement {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user === undefined) {
+        if (localStorage.getItem('user') === null) {
             navigate("/", {replace: true});
         }
     }, [user, navigate]);
