@@ -52,10 +52,16 @@ const HomePage = () => {
                                     {invoice.bills?.length}
                                 </div>
                                 <div>
-                                    {invoice.account?.id === user?.id && <button className="btn btn-success"
-                                             onClick={() => onPay()}>{t("home:table-action-pay")}</button>}
-                                    <button className="btn btn-success"
-                                            onClick={() => onView(invoice.id)}>{t("home:table-action-view")}</button>
+                                        <div className="p-2">
+                                            {invoice.account?.id === user?.id && 
+                                            <button className="btn btn-success"
+                                                    onClick={() => onPay()}>{t("home:table-action-pay")}
+                                            </button>}
+                                            <button className="btn btn-info" style={{color:"white"}}
+                                                    onClick={() => onView(invoice.id)}>{t("home:table-action-view")}</button>  
+                                        </div>
+                                        
+                                         
                                 </div>
                             </div>
                             <hr></hr>
