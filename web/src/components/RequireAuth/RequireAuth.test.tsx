@@ -5,6 +5,6 @@ import {cleanup} from '@testing-library/react';
 // unmount and cleanup DOM after the test is finished.
 afterEach(cleanup);
 
-it('LoginPage ', () => {
+it('RequireAuth ', () => {
     expect(true).toBe(true);
 });

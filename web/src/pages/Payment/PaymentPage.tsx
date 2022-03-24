@@ -6,11 +6,10 @@ import {useTranslation} from "react-i18next";
 const PaymentPage = () => {
 
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation("payment");
+    const { t } = useTranslation("payment");
 
     const handlePayment = () => {
         navigate("/confirmation");
-        window.location.reload();
     }
     
     return(

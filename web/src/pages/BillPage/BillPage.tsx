@@ -1,4 +1,4 @@
-import {Bill, Invoice} from "../../api/api.schemas";
+import {Bill} from "../../api/api.schemas";
 import moment from "moment";
 
 export interface BillPageProps {
@@ -6,6 +6,7 @@ export interface BillPageProps {
 }
 
 function BillPage(props: BillPageProps) {
+
     return (
         <div>
             <h1 style={{ textAlign: "justify" }}>#{props.bill.id}</h1>

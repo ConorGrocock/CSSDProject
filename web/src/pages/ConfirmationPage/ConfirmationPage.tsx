@@ -11,7 +11,7 @@ const ConfirmationPage = () => {
             <h5>InvoiceID: #162313</h5>
             <div className="d-flex justify-content-around pt-4">
                 <div>
-                    <img src={checkMark} style={{width: 700, height: 400}}/>
+                    <img src={checkMark} style={{width: 700, height: 400}} alt={"checkmark"}/>
                 </div>
                 <div className="pt-5">
                     <p style={{fontSize:34, textAlign: "center"}}>{t("confirmation:confirm-subtitle")}</p>

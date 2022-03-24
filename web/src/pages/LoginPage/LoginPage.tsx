@@ -1,15 +1,18 @@
-import React, { FormEvent, useState } from "react";
+import React, {FormEvent, useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom"
 import {Form, Button} from "react-bootstrap"
 import { usePostApiAuthRequest } from "../../api/auth/auth";
 import { PostApiAuthRequestParams } from "../../api/api.schemas";
 import logo from "../../assets/road.png"
 import {useTranslation} from "react-i18next";
+import {UserContext} from "../../Contexts/UserContext";
 
 const LoginPage = () => {
 
-    const {t, i18n} = useTranslation("login");
+    const {t} = useTranslation("login");
     const [loggingIn, setLoggingIn] = useState(false);
+    const {user} = useContext(UserContext);
+
 
     const navigate = useNavigate();
     
@@ -26,8 +29,13 @@ const LoginPage = () => {
         console.log(email.value);
         const data: PostApiAuthRequestParams = {email: email.value}
         mutate({params: data});
-        
     };
+
+    useEffect(() => {
+        if(user){
+            navigate("/home")
+        }
+    }, [user, navigate])
 
     return(
         <div className="d-flex justify-content-center">
@@ -45,7 +53,7 @@ const LoginPage = () => {
                     </div>
                 </Form>
             </div>
-            <img src={logo} style={{position: "absolute", width: 300, height: 300, marginTop: 300}} />
+            <img src={logo} style={{position: "absolute", width: 300, height: 300, marginTop: 300}}  alt={"Nortol Logo"}/>
         </div>
         
     )
