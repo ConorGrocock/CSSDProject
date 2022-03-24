@@ -117,7 +117,11 @@ public class IdentityService : IIdentityService
 
     private ClaimsPrincipal EnsureUser()
     {
-        return _httpContextAccessor.HttpContext?.User
-            ?? throw new AuthenticationException("No user is signed in");
+        if (!(_httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false))
+        {
+            throw new AuthenticationException("No user is signed in");
+        }
+
+        return _httpContextAccessor.HttpContext.User;
     }
 }
