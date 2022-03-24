@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using api.Models.Entities;
 using api.Repositories;
 using api.Repositories.Common;
+using api.Repositories.Common.Interfaces;
 using api.Repositories.Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -16,12 +17,12 @@ public class BaseRepositoryTests
     public async Task CanGetAll()
     {
         // Arrange
-        var entity1 = new WeatherForecast();
-        var entity2 = new WeatherForecast();
+        var entity1 = new Bill();
+        var entity2 = new Bill();
 
         var (context, repository) = await GetRepository();
 
-        await context.Set<WeatherForecast>().AddRangeAsync(entity1, entity2);
+        await context.Set<Bill>().AddRangeAsync(entity1, entity2);
         await context.SaveChangesAsync();
 
         // Act
@@ -35,11 +36,11 @@ public class BaseRepositoryTests
     public async Task CanGetById()
     {
         // Arrange
-        var entity = new WeatherForecast();
+        var entity = new Bill();
 
         var (context, repository) = await GetRepository();
 
-        await context.Set<WeatherForecast>().AddAsync(entity);
+        await context.Set<Bill>().AddAsync(entity);
         await context.SaveChangesAsync();
 
         // Act
@@ -54,19 +55,19 @@ public class BaseRepositoryTests
     public async Task GetByIdThrowsWhenEntityMissing()
     {
         // Arrange
-        var entity = new WeatherForecast();
+        var entity = new Bill();
 
         var (_, repository) = await GetRepository();
 
         // Act, Assert
-        await Assert.ThrowsAsync<EntityNotFoundException<WeatherForecast>>(() => repository.Get(Guid.NewGuid()));
+        await Assert.ThrowsAsync<EntityNotFoundException<Bill>>(() => repository.Get(Guid.NewGuid()));
     }
 
     [Fact]
     public async Task CanInsert()
     {
         // Arrange
-        var entity = new WeatherForecast();
+        var entity = new Bill();
 
         var (context, repository) = await GetRepository();
 
@@ -74,7 +75,7 @@ public class BaseRepositoryTests
         await repository.Insert(entity);
 
         // Assert
-        var result = await context.Set<WeatherForecast>().FirstOrDefaultAsync(x => x.Id == entity.Id);
+        var result = await context.Set<Bill>().FirstOrDefaultAsync(x => x.Id == entity.Id);
 
         Assert.NotNull(result);
     }
@@ -83,22 +84,22 @@ public class BaseRepositoryTests
     public async Task CanUpdate()
     {
         // Arrange
-        var entity = new WeatherForecast();
+        var entity = new Bill();
 
         var (context, repository) = await GetRepository();
-        await context.Set<WeatherForecast>().AddAsync(entity);
+        await context.Set<Bill>().AddAsync(entity);
         await context.SaveChangesAsync();
 
-        entity.Summary = "summary";
+        entity.Amount = 100m;
 
         // Act
         await repository.Update(entity);
 
         // Assert
-        var result = await context.Set<WeatherForecast>().FirstOrDefaultAsync(x => x.Id == entity.Id);
+        var result = await context.Set<Bill>().FirstOrDefaultAsync(x => x.Id == entity.Id);
 
         Assert.NotNull(result);
-        Assert.Equal("summary", result!.Summary);
+        Assert.Equal(100m, result!.Amount);
     }
 
 
@@ -106,25 +107,25 @@ public class BaseRepositoryTests
     public async Task CanDelete()
     {
         // Arrange
-        var entity = new WeatherForecast();
+        var entity = new Bill();
 
         var (context, repository) = await GetRepository();
-        await context.Set<WeatherForecast>().AddAsync(entity);
+        await context.Set<Bill>().AddAsync(entity);
         await context.SaveChangesAsync();
 
         // Act
         await repository.Delete(entity.Id);
 
         // Assert
-        var result = await context.Set<WeatherForecast>().ToListAsync();
+        var result = await context.Set<Bill>().ToListAsync();
 
         Assert.Empty(result);
     }
 
-    private static async Task<(NorTollDbContext, BaseRepository<WeatherForecast>)> GetRepository()
+    private static async Task<(NorTollDbContext, IBaseRepository<Bill>)> GetRepository()
     {
         var context = await GetContext();
 
-        return (context, new BaseRepository<WeatherForecast>(context));
+        return (context, new BaseRepository<Bill>(context));
     }
 }

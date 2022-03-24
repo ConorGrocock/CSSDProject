@@ -16,13 +16,13 @@ public class InvoiceController : NorTollControllerBase
         _billService = billService;
     }
 
-    [HttpGet]
+    [HttpGet, Authorize]
     public async Task<ViewInvoiceDto[]> Get()
     {
         return await _invoiceService.GetInvoices();
     }
 
-    [HttpGet("{invoiceId}")]
+    [HttpGet("{invoiceId}"), Authorize]
     public async Task<ViewInvoiceDto> GetId([FromRoute] Guid invoiceId)
     {
         return await _invoiceService.GetInvoice(invoiceId);
