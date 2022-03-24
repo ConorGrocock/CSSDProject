@@ -52,8 +52,8 @@ const HomePage = () => {
                                     {invoice.bills?.length}
                                 </div>
                                 <div>
-                                    <button className="btn btn-success"
-                                            onClick={() => onPay()}>{t("home:table-action-pay")}</button>
+                                    {invoice.account?.id === user?.id && <button className="btn btn-success"
+                                             onClick={() => onPay()}>{t("home:table-action-pay")}</button>}
                                     <button className="btn btn-success"
                                             onClick={() => onView(invoice.id)}>{t("home:table-action-view")}</button>
                                 </div>
