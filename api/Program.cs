@@ -104,7 +104,6 @@ public class Program
             .AddTransient<NorTollDbContext>()
             .AddTransient<IAccountRepository, AccountRepository>()
             .AddTransient<ISignInTokenRepository, SignInTokenRepository>()
-            .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>()
             .AddTransient<IInvoiceRepository, InvoiceRepository>()
             .AddTransient<IPaymentConfirmationTokenRepository, PaymentConfirmationTokenRepository>();
     }
@@ -112,7 +111,6 @@ public class Program
     {
         builder.Services
             .AddTransient<IIdentityService, IdentityService>()
-            .AddTransient<IWeatherService, WeatherService>()
             .AddTransient<IDateTimeService, DateTimeService>()
             .AddTransient<IInvoiceService, InvoiceService>()
             .AddTransient<IExternalPaymentProviderService, TestExternalPaymentProviderService>();

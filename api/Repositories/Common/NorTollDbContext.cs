@@ -1,5 +1,4 @@
 ﻿using api.Models.Entities;
-using api.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories.Common;
@@ -14,14 +13,12 @@ public class NorTollDbContext : DbContext
     public DbSet<PaymentConfirmation> PaymentConfirmations { get; set; }
     public DbSet<PaymentConfirmationToken> PaymentConfirmationTokens { get; set; }
     public DbSet<SignInToken> SignInTokens { get; set; }
-    public DbSet<WeatherForecast> WeatherForecasts { get; set; }
 
 #nullable enable
     public NorTollDbContext(DbContextOptions<NorTollDbContext> dbContextOptions) : base(dbContextOptions) { }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<WeatherForecast>().HasKey(x => x.Id);
         builder.Entity<Address>().HasKey(x => x.Id);
         builder.Entity<Account>().HasKey(x => x.Id);
         builder.Entity<SignInToken>().HasKey(x => x.Id);
