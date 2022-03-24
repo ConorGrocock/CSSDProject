@@ -34,6 +34,7 @@ function AuthPage(props: AuthPageProps) {
         const user: User = {
             name: decoded.name as string,
             role: decoded.role as string,
+            id: decoded.sub as string,
             token: token as string
         }
 
