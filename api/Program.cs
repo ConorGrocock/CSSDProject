@@ -35,6 +35,7 @@ public class Program
             options.AddPolicy(CorsPolicyName, builder =>
             {
                 builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
             });
         });
         builder.Services.AddControllers();
@@ -80,7 +81,7 @@ public class Program
         }
 
         var app = builder.Build();
-
+        
         app.UseHttpsRedirection();
 
         app.UseCors(CorsPolicyName);
@@ -106,7 +107,8 @@ public class Program
             .AddTransient<ISignInTokenRepository, SignInTokenRepository>()
             .AddTransient<IWeatherForecastRepository, WeatherForecastRepository>()
             .AddTransient<IInvoiceRepository, InvoiceRepository>()
-            .AddTransient<IPaymentConfirmationTokenRepository, PaymentConfirmationTokenRepository>();
+            .AddTransient<IPaymentConfirmationTokenRepository, PaymentConfirmationTokenRepository>()
+            .AddTransient<IBillRepository, BillRepository>();
     }
     private static void ConfigureServiceDependencies(WebApplicationBuilder builder)
     {
@@ -115,7 +117,8 @@ public class Program
             .AddTransient<IWeatherService, WeatherService>()
             .AddTransient<IDateTimeService, DateTimeService>()
             .AddTransient<IInvoiceService, InvoiceService>()
-            .AddTransient<IExternalPaymentProviderService, TestExternalPaymentProviderService>();
+            .AddTransient<IExternalPaymentProviderService, TestExternalPaymentProviderService>()
+            .AddTransient<IBillService, BillService>();
     }
     private static void ConfigureTestDependencies(WebApplicationBuilder builder)
     {
@@ -274,4 +277,3 @@ public static class SeedData
     public static Guid Invoice2Id { get; } = Guid.NewGuid();
     public static Guid Invoice3Id { get; } = Guid.NewGuid();
 }
-

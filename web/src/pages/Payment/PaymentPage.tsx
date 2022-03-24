@@ -9,7 +9,7 @@ const PaymentPage = () => {
     const { t, i18n } = useTranslation("payment");
 
     const handlePayment = () => {
-        navigate("/home");
+        navigate("/confirmation");
         window.location.reload();
     }
     
